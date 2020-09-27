@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  api:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/api
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment: 
+      MYSQL_USER: ${DATABASE_USER:-user}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DATABASE_NAME:-database}
+
+networks:
+  default:
+    name: clinica
