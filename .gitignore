@@ -1,10 +1,8 @@
 .idea
+.vscode
 venv
 __pycache__
 */__pycache__
 .vscode
-Pipfile
-Pipfile.lock
 db.sqlite3
-
 .idea/*
