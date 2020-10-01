@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'people',
     'tasks',
     'users',
+    'on_duty',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
