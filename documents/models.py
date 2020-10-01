@@ -4,4 +4,4 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Document(models.Model):
-    type = models.CharField(_("Link"), max_length=50)
+    type = models.CharField(_("Link"), max_length=50, default=None)

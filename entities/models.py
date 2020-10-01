@@ -4,4 +4,4 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Entity(models.Model):
-    name = models.CharField(_("Nome"), max_length=50)
+    name = models.CharField(_("Nome"), max_length=50, default=None)

@@ -2,6 +2,7 @@ FROM python:3.8-slim AS builder
 WORKDIR /api
 
 # install dependencies to the local user directory (eg. /root/.local)
+RUN apt update -y && apt install -y libpq-dev gcc
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
 

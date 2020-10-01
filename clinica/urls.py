@@ -18,16 +18,19 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-# from django.contrib.auth import views as auth_views
-# from django.conf.urls import url, include
-# from django.contrib import admin
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+
 
 from users.views import UserViewSet
 
 router = routers.DefaultRouter()
-router.register('users', UserViewSet)
+router.register('accounts', UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('auth/', include('djoser.urls')),
+    path('auth/login/', obtain_jwt_token),
+    path('auth/login/refresh', refresh_jwt_token),
+    path('auth/verify-token/', verify_jwt_token)
 ]
