@@ -20,11 +20,12 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
-
 from users.views import UserViewSet
+from cases.views import CaseViewSet
 
 router = routers.DefaultRouter()
 router.register('accounts', UserViewSet)
+router.register('cases', CaseViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
