@@ -26,7 +26,7 @@ SECRET_KEY = '3wq@2894hy09ks!m6cjb%(%bz4+hjs7=)ac$yk#c&fvfe9jlg4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'cases',
     'documents',
     'entities',
-    'judicialAppeal',
-    'lawSuits',
+    'judicial_appeal',
+    'law_suits',
     'people',
     'tasks',
     'users',
+    'address',
     'on_duty',
     'rest_framework',
     'rest_framework.authtoken',

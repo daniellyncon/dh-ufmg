@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class LawsuitsConfig(AppConfig):
-    name = 'lawSuits'
+    name = 'law_suits'

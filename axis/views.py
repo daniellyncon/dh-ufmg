@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Axis
+from .serializers import AxisSerializer
 
-# Create your views here.
+
+class AxisViewSet(viewsets.ModelViewSet):
+    queryset = Axis.objects.all()
+    serializer_class = AxisSerializer

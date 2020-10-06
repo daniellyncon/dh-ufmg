@@ -23,11 +23,15 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 from users.views import UserViewSet
 from cases.views import CaseViewSet
 from on_duty.views import OnDutyViewSet
+from address.views import AddressViewSet
+from axis.views import AxisViewSet
 
 router = routers.DefaultRouter()
 router.register('accounts', UserViewSet)
-router.register('cases', CaseViewSet)
 router.register('duties', OnDutyViewSet)
+router.register('address', AddressViewSet)
+router.register('cases', CaseViewSet)
+router.register('axes', AxisViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

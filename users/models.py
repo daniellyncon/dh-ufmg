@@ -3,13 +3,13 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils.translation import ugettext_lazy as _
 from axis.models import Axis
+from address.models import Address
 
 
 class MyUserManager(UserManager):
     def create_user(self, name, email, date_joined, rg, cpf, password=None, **kwargs):
         if not email:
             raise ValueError('Users must have an email address')
-
 
         user = self.model(
             username=email,
@@ -24,10 +24,9 @@ class MyUserManager(UserManager):
         return user
 
     def create_superuser(self, name, email, date_joined, rg, cpf, password=None, **kwargs):
-        
         user = self.create_user(
             username=email,
-            name= name,
+            name=name,
             email=self.normalize_email(email),
             date_joined=date_joined,
             rg=rg,
@@ -53,16 +52,11 @@ class User(AbstractUser):
     bond_type = models.CharField(_("Tipo de vínculo"), max_length=50, blank=True, null=True)
     phone = models.CharField(_("Telefone"), max_length=15, blank=True, null=True)
     registration = models.CharField(_("Nº de matrícula"), max_length=50, blank=True, null=True)
-    street_address = models.CharField(_("Rua"), max_length=100, blank=True, null=True)
-    number_address = models.IntegerField(_("Número"), blank=True, null=True)
-    complement_address = models.CharField(_("Complemento"), max_length=100, blank=True, null=True)
-    neighborhood_address = models.CharField(_("Bairro"), max_length=100, blank=True, null=True)
-    city_address = models.CharField(_("Cidade"), max_length=50, blank=True, null=True)
-    state_address = models.CharField(_("Estado"), max_length=50, blank=True, null=True)
+
     course = models.CharField(_("Curso"), max_length=50, blank=True, null=True)
     university = models.CharField(_("Universidade"), max_length=50, blank=True, null=True)
     department = models.CharField(_("Departamento"), max_length=50, blank=True, null=True)
-   
+
     date_fired = models.DateField(_("Data de desligamento"), default=None, blank=True, null=True)
     is_active = models.BooleanField(_("Ativo"), default=True)
     is_staff = models.BooleanField(_('Staff'), default=False)
@@ -70,15 +64,15 @@ class User(AbstractUser):
 
     scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True)
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
-    
+
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, blank=True, null=True)
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'bond_type', 'phone', 'registration', 'street_address', 'number_address', 'complement_address', 
-            'neighborhood_address', 'city_address', 'state_address', 'course', 'university', 'department', 'rg', 'cpf', 'cnh', 
-            'date_joined', 'is_active', 'scholarship', 'scholarship_type']
+    REQUIRED_FIELDS = ['name', 'bond_type', 'phone', 'registration', 'course', 'university', 'department',
+                       'rg', 'cpf', 'cnh',
+                       'date_joined', 'is_active', 'scholarship', 'scholarship_type']
 
     def __str__(self):
         return self.name
-

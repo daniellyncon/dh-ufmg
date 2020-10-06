@@ -13,5 +13,5 @@ class CaseSerializer(serializers.ModelSerializer):
     # documents
     class Meta:
         model = Case
-        fields = ['case_number', 'releted_areas',  'reference_contacts', 'daj_number',  'daj_advisor',  'daj_intern',
+        fields = ['case_number', 'related_areas',  'reference_contacts', 'daj_number',  'daj_advisor',  'daj_intern',
         'report', 'registration_date', 'solution_date']
