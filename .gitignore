@@ -1,0 +1,8 @@
+.idea
+.vscode
+venv
+__pycache__
+*/__pycache__
+.vscode
+db.sqlite3
+.idea/*
