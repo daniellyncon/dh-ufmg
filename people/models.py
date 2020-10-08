@@ -1,7 +1,6 @@
 from django.db import models
 from users.models import User
 # from cases.models import Case
-from law_suits.models import LawSuit
 from documents.models import Document
 from datetime import date
 from address.models import Address
@@ -80,7 +79,7 @@ class Person(models.Model):
                                          choices=CASE_BOND_CHOICES)
 
     # processo
-    related_law_suit = models.ForeignKey(LawSuit, on_delete=models.SET_NULL, related_name="law_suit", blank=True, null=True)
+
     related_law_suit_bond = models.CharField(verbose_name="Vínculo processo", choices=LAW_SUIT_CHOICES,
                                              max_length=50, blank=True, null=True)
 
