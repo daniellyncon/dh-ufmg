@@ -1,260 +1,46 @@
 from django.db import models
+from entities.models import Entity
+from users.models import User
+from people.models import Person
 # Create your models here.
 
 
 class Attendance(models.Model):
+    assisted_person = models.ForeignKey(Person, on_delete=models.SET_NULL,
+                                        related_name="atendimento", blank=True, null=True)
+
     how_knew_about_drs = models.CharField(max_length=100, blank=True, null=True)
-    # comum ao transpasse
     current_occupation = models.CharField(max_length=100, blank=True, null=True)
+    had_other_occupations = models.CharField(max_length=100, blank=True, null=True)
+    relevant_information = models.CharField(max_length=100, blank=True, null=True)
+    entities = models.ManyToManyField(Entity, related_name="entity")
+    last_attendance_date = models.DateField()
 
-    Teve
-    outros
-    trabalhos?
-    Facultativo
-    (comum ao do transpasse?)
-    DRS
-    Informações
-    relevantes
-    Facultativo
-    Texto
-    livre
-    DRS
-    Familiares
-    e
-    outras
-    pessoas
-    de
-    referência
-    Obrigatório
-    (comum ao de  Pessoa?)
-    DRS
-    Entidades
-    e
-    Serviços
-    de
-    referência
-    Facultativo
-    Selecionar
-    Entidades
-    do
-    banco?
-    DRS
-    Tipo
-    de
-    acompanhamento
-    Facultativo
-    Lista
-    pré - definida?
-    DRS
-    Último
-    atendimento / visita
-    Facultativo
-    formato
-    data
-
-    Transpasse
-    Como
-    soube
-    do
-    Transpasse
-    Facultativo
-    pegar
-    do
-    formulário
-    Transpasse
-    Estagiária
-    da
-    Psicologia
-    Facultativo
-    Selecionar
-    entre as opções: Banco
-    de
-    Usuários
-    do
-    Sistema
-    do
-    curso
-    psicologia
-    (ZERO, UMA OU MAIS)
-    Transpasse
-    Com
-    quem
-    mora
-    Facultativo
-    Texto
-    livre
-    Transpasse
-    Cidades
-    por
-    onde
-    passou
-    Facultativo
-    Texto
-    livre
-    Transpasse
-    Exames
-    IST
-    em
-    dia
-    Obrigatório
-    checkbox
-    Transpasse
-    Última
-    vez
-    que
-    foi
-    ao
-    posto
-    de
-    saúde
-    Facultativo
-    Selecionar
-    uma
-    entre as opções: [Vou com frequência, 1 a 3 meses atrás, 3 a 6 meses atrás,
-                      Mais de 6 meses,
-                      Mais de um ano]
-    Transpasse
-    Faz
-    uso
-    de
-    álcool
-    e
-    drogas
-    Facultativo
-    checkbox
-    Transpasse
-    Quais
-    drogas
-    usa
-    Facultativa
-    Texto
-    Transpasse
-    Considera
-    o
-    uso
-    prejudicial
-    Facultativo
-    checkbox(aparecer
-    somente
-    se
-    o
-    anterior
-    for marcado)
-    Transpasse
-    Uso
-    de
-    hormônios
-    Facultativo
-    checkbox
-    Transpasse
-    uso
-    acompanhado
-    por
-    médico
-    Facultativo
-    checkbox
-    Transpasse
-    Qual( is) hormônios
-    Facultativo
-    Texto
-    Livre(Lista
-    do
-    formulário)
-    Transpasse
-    Trabalha
-    Facultativo
-    checkbox
-    Transpasse
-    Onde
-    trabalha
-    Facultativo
-    Texto
-    Livre(se
-    trabalha)
-    Transpasse
-    Já
-    Trabalhou
-    Facultativo
-    checkbox
-    Transpasse
-    Onde
-    trabalhou
-    Facultativo
-    Texto
-    Livre
-    Transpasse
-    Quais
-    são
-    seus
-    interesses
-    Facultativo
-    Texto
-    Livre(Escolher
-    múltiplos
-    de
-    uma
-    lista?)
-    Transpasse
-    Faz
-    pista
-    Facultativo
-    checkbox
-    Transpasse
-    tipo
-    de
-    pista
-    Facultativa
-    lista
-    questionário
-    Transpasse
-    Onde
-    faz
-    pista
-    Facultativo
-    Texto
-    Livre
-    Transpasse
-    Quais
-    documentos
-    possui
-    Facultativo
-    lista
-    questionário
-    Transpasse
-    Nome
-    e
-    gênero
-    retificado
-    Facultativo
-    checkbox
-    Transpasse
-    Deseja
-    retificar
-    Facultativo
-    checkbox(se
-    não)
-    Transpasse
-    Já
-    foi
-    presa
-    Facultativo
-    Opções[1, 2 - 4, 5 +, não]
-    Transpasse
-    cidade
-    em
-    que
-    foi
-    presa
-    Facultativo
-    Texto
-    Transpasse
-    ano
-    da
-    prisão
-    Facultativo
-    data
-    Transpasse
-    Tem
-    processo
-    Facultativo
-    checkbox
+    how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True)
+    psychology_intern = models.ForeignKey(User, verbose_name="Estagiária de psicologia", blank=True, null=True,
+                                          on_delete=models.SET_NULL)
+    lives_with = models.CharField(max_length=100, blank=True, null=True)
+    cities_lived = models.CharField(max_length=100, blank=True, null=True)
+    ist_exams_up_to_date = models.BooleanField(default=False)
+    last_time_been_health_center = models.CharField(max_length=100, blank=True, null=True)
+    is_drug_user = models.BooleanField(default=False, blank=True, null=True)
+    which_drugs = models.CharField(max_length=100, blank=True, null=True)
+    consider_drugs_bad = models.BooleanField(default=False, blank=True, null=True)
+    uses_hormones = models.BooleanField(default=False, blank=True, null=True)
+    use_accompanied_by_doctor = models.BooleanField(default=False, blank=True, null=True)
+    which_hormones = models.CharField(max_length=100, blank=True, null=True)
+    works = models.BooleanField(default=False, blank=True, null=True)
+    where_works = models.CharField(max_length=100, blank=True, null=True)
+    already_worked = models.BooleanField(default=False, blank=True, null=True)
+    where_worked = models.CharField(max_length=100, blank=True, null=True)
+    interests = models.CharField(max_length=100, blank=True, null=True)
+    makes_track = models.BooleanField(default=False, blank=True, null=True)
+    track_type = models.CharField(max_length=100, blank=True, null=True)
+    where_makes_track = models.CharField(max_length=100, blank=True, null=True)
+    documents_owned = models.CharField(max_length=100, blank=True, null=True)
+    rectified_name_and_gender = models.BooleanField(default=False, blank=True, null=True)
+    willing_to_rectify = models.BooleanField(default=False, blank=True, null=True)
+    been_arrested = models.BooleanField(default=False, blank=True, null=True)
+    city_arrested = models.CharField(max_length=100, blank=True, null=True)
+    year_arrested = models.CharField(max_length=20, blank=True, null=True)
+    was_processed = models.BooleanField(default=False, blank=True, null=True)

@@ -24,6 +24,7 @@ from on_duty.views import OnDutyViewSet
 from address.views import AddressViewSet
 from axis.views import AxisViewSet
 from people.views import PersonViewSet
+from attendance.views import AttendanceViewSet
 
 router = routers.DefaultRouter()
 router.register('accounts', UserViewSet)
@@ -32,6 +33,7 @@ router.register('address', AddressViewSet)
 router.register('cases', CaseViewSet)
 router.register('axes', AxisViewSet)
 router.register('people', PersonViewSet)
+router.register('attendance', AttendanceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

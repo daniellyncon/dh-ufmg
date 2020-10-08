@@ -71,7 +71,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'bond_type', 'phone', 'registration', 'course', 'university', 'department',
-                       'rg', 'cpf', 'cnh',
+                       'rg', 'cpf', 'cnh', 'address',
                        'date_joined', 'is_active', 'scholarship', 'scholarship_type']
 
     def __str__(self):

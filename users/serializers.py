@@ -6,10 +6,9 @@ from .models import User
 
 class UserSerializer(WritableNestedModelSerializer):
     address = AddressSerializer()
-    on_duty = OnDutySerializer(required=False, allow_null=True, many=True)
 
     class Meta:
         model = User
-        fields = ('name', 'email', 'bond_type', 'phone', 'registration', 'address',
-                  'course', 'university', 'department', 'rg', 'cpf', 'cnh', 'on_duty',
+        fields = ('id', 'name', 'email', 'bond_type', 'phone', 'registration', 'address',
+                  'course', 'university', 'department', 'rg', 'cpf', 'cnh',
                   'date_joined', 'date_fired', 'is_active', 'scholarship', 'scholarship_type')
