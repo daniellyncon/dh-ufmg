@@ -11,7 +11,9 @@ from documents.models import Document
 
 class Case(models.Model):
     AREAS = (('1', 'Administrativo'), ('2', 'Ambiental'), ('3', 'Cível'), ('4', 'Consumidor'),
-                ('5', 'Criminal'))
+            ('5', 'Criminal'), ('6', 'Família'), ('7', 'Ambiental'), ('8', 'Previdenciário'),
+            ('9', 'Sucessões'), ('10', 'Societário'), ('11', 'Trabalhista'), ('12', 'Tributário'),
+            ('13', 'Contratos'), ('14', 'Internacional'))
     case_number = models.IntegerField(("Número do Caso"), blank=False, null=False)
     related_areas = models.CharField(max_length=3, choices=AREAS, blank=True, null=True, verbose_name='Áreas Relacionadas')
     assisted_person = models.ManyToManyField(Person, verbose_name=_("Pessoa Assistida"), blank=True, related_name="related_case")
