@@ -30,3 +30,7 @@ class LawSuit(models.Model):
     transit_date = models.DateField(_("Data trânsito em julgado"), auto_now=False, default=None)
     related_person = models.ForeignKey(Person, on_delete=models.SET_NULL, related_name="related_law_suit",
                                        blank=True, null=True)
+
+
+    def __str__(self):
+        return self.law_suit_number

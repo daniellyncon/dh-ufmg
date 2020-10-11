@@ -85,6 +85,5 @@ class Person(models.Model):
 
     document = models.ManyToManyField(Document, verbose_name="Documentos", blank=True)
 
-    def age(self):
-        today = date.today()
-        return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
+    def __str__(self):
+        return self.full_name

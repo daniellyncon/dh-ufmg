@@ -1,5 +1,3 @@
-from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _
 from .models import User
 from django import forms
 from django.contrib import admin
@@ -36,6 +34,7 @@ class UserCreationForm(forms.ModelForm):
 
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
+
     class Meta:
         model = User
         fields = ('email', 'name', 'email', 'date_joined', 'rg', 'cpf', 'is_active', 'is_admin')
@@ -63,7 +62,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'rg', 'cpf', 'is_active','date_joined', 'password1', 'password2'),
+            'fields': ('email', 'name', 'rg', 'cpf', 'is_active', 'date_joined', 'password1', 'password2'),
         }),
     )
     search_fields = ('email',)

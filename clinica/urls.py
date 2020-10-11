@@ -18,15 +18,19 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+from tasks.views import TaskViewSet
 from users.views import UserViewSet
 from cases.views import CaseViewSet
 from on_duty.views import OnDutyViewSet
 from address.views import AddressViewSet
 from axis.views import AxisViewSet
+
 from people.views import PersonViewSet
 from attendance.views import AttendanceViewSet
-from judicial_appeal.views import JudicialAppealViewSet
+from judicial_appeal.views import JudicialAppealViewSet, JudicialAppealMoveViewSet
 from law_suits.views import LawSuitViewSet
+from entities.views import EntityViewSet
+from documents.views import DocumentViewSet
 
 
 router = routers.DefaultRouter()
@@ -38,7 +42,11 @@ router.register('axes', AxisViewSet)
 router.register('people', PersonViewSet)
 router.register('attendance', AttendanceViewSet)
 router.register('judicial_appeal', JudicialAppealViewSet)
+router.register('judicial_appeal_move', JudicialAppealMoveViewSet)
 router.register('law_suits', LawSuitViewSet)
+router.register('entities', EntityViewSet)
+router.register('documents', DocumentViewSet)
+router.register('tasks', TaskViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
