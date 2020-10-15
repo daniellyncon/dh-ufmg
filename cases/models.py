@@ -14,7 +14,7 @@ class Case(models.Model):
             ('5', 'Criminal'), ('6', 'Família'), ('7', 'Ambiental'), ('8', 'Previdenciário'),
             ('9', 'Sucessões'), ('10', 'Societário'), ('11', 'Trabalhista'), ('12', 'Tributário'),
             ('13', 'Contratos'), ('14', 'Internacional'))
-    case_number = models.IntegerField(("Número do Caso"), blank=False, null=False)
+    # case_number = models.IntegerField(("Número do Caso"), blank=False, null=False)
     related_areas = models.CharField(max_length=3, choices=AREAS, blank=True, null=True, verbose_name='Áreas Relacionadas')
     assisted_person = models.ManyToManyField(Person, verbose_name=_("Pessoa Assistida"), blank=True, related_name="related_case")
     advisor = models.ManyToManyField(User, verbose_name=_("Oritentador Responsável"), blank=True, related_name="advisor")
