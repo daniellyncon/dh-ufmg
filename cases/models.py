@@ -30,7 +30,7 @@ class Case(models.Model):
     tasks = models.ManyToManyField(Task, verbose_name=("Processos"),blank=True)
     documents = models.ManyToManyField(Document, verbose_name=("Processos"), blank=True)
     registration_date = models.DateField(_("Data de cadastro"), auto_now=False)
-    solution_date = models.DateField(_("Data de cadastro"), auto_now=False)
+    solution_date = models.DateField(_("Data de cadastro"), auto_now=False, blank=True, null=True)
 
     def __str__(self):
         return self.case_number
