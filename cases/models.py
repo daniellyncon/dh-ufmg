@@ -27,10 +27,10 @@ class Case(models.Model):
     daj_intern = models.CharField(("Estagiário no DAJ"), blank=True, null=True, default=None, max_length=50)    
     law_suits = models.ManyToManyField(LawSuit, verbose_name=("Processos"), blank=True)
     report = models.CharField( ("Relatório"), blank=True, null=True, default=None, max_length=15000)
-    tasks = models.ManyToManyField(Task, verbose_name=("Processos"),blank=True)
-    documents = models.ManyToManyField(Document, verbose_name=("Processos"), blank=True)
+    tasks = models.ManyToManyField(Task, verbose_name=("Tarefa"),blank=True)
+    documents = models.ManyToManyField(Document, verbose_name=("Documentos"), blank=True)
     registration_date = models.DateField(_("Data de cadastro"), auto_now=False)
-    solution_date = models.DateField(_("Data de cadastro"), auto_now=False, blank=True, null=True)
+    solution_date = models.DateField(_("Data de solução"), auto_now=False, blank=True, null=True)
 
     def __str__(self):
-        return self.case_number
+        return self.id
