@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('judicial_appeal', '0001_initial'),
+        ('judicial_appeals', '0001_initial'),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateField(auto_now=True, verbose_name='Data')),
                 ('description', models.CharField(blank=True, default=None, max_length=1000, null=True, verbose_name='Descrição')),
-                ('judicial_appeal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='judicial_appeal.judicialappeal')),
+                ('judicial_appeals', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='judicial_appeals.judicialappeal')),
             ],
         ),
     ]

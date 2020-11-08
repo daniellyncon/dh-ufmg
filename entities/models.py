@@ -18,7 +18,8 @@ class Entity(models.Model):
                                                 blank=True, null=True)
     comments = models.CharField(_("Observação"), max_length=500, default=None, blank=True, null=True)
     person = models.ManyToManyField(Person, related_name="assisted_persons", blank=True)
-    axis = models.ManyToManyField(Axis, _("Eixo"), blank=True)
+    axis = models.ManyToManyField(Axis, related_name="associated_axes", blank=True)
 
     def __str__(self):
         return self.name
+

@@ -6,3 +6,4 @@ from .serializers import AttendanceSerializer
 class AttendanceViewSet(viewsets.ModelViewSet):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
+    filterset_fields = ['assisted_person', 'psychology_intern', ]

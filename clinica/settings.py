@@ -13,17 +13,26 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import django_heroku
 import datetime
+import dotenv  # <- New
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Add .env variables anywhere before SECRET_KEY
+dotenv_file = os.path.join(BASE_DIR, ".env")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3wq@2894hy09ks!m6cjb%(%bz4+hjs7=)ac$yk#c&fvfe9jlg4'
+# Add .env variables anywhere before SECRET_KEY
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
+# Update secret key
+SECRET_KEY = os.environ['SECRET_KEY']  # Instead of your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +53,7 @@ INSTALLED_APPS = [
     'cases',
     'documents',
     'entities',
-    'judicial_appeal',
+    'judicial_appeals',
     'law_suits',
     'people',
     'tasks',
@@ -56,6 +65,7 @@ INSTALLED_APPS = [
     'django_filters',
     'djoser',
     'corsheaders',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -99,6 +109,37 @@ DJOSER = {
 
 }
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+        }
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO'
+        },
+        'chat': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'DEBUG',
+        },
+    },
+}
+
 ROOT_URLCONF = 'clinica.urls'
 
 TEMPLATES = [
@@ -130,11 +171,10 @@ SEND_ACTIVATION_EMAIL = False
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_FIELD = 'email'
-# ACCOUNT_ADAPTER = 'users.adapter.CustomAccountAdapter'
-# DEFAULT_FROM_EMAIL = 'belohorizonte@aiesec.org.br'
-# SITE_ID = 1
+
 
 WSGI_APPLICATION = 'clinica.wsgi.application'
+ASGI_APPLICATION = "clinica.routing.application"
 
 
 REST_FRAMEWORK = {
@@ -148,6 +188,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
 }
 
 JWT_AUTH = {
@@ -163,10 +205,23 @@ JWT_AUTH = {
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['PG_DB'],
+        'USER': os.environ['PG_USER'],
+        'PASSWORD': os.environ['PG_PASSWORD'],
+        'HOST': os.environ['PG_HOST'],
+        'PORT': '5432',
+        'ATOMIC_REQUESTS': False,
+        'CONN_MAX_AGE': 0,
+        'DISABLE_SERVER_SIDE_CURSORS': True
     }
 }
 
@@ -217,3 +272,4 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']

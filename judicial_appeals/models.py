@@ -14,7 +14,7 @@ class JudicialAppeal(models.Model):
     plenary = models.CharField(_("Câmara/Turma/Plenário"), max_length=200, default=None, blank=True, null=True)
     report = models.CharField(_("Relatoria"), max_length=200, default=None, blank=True, null=True)
     resume = models.TextField(_("Resumo"), max_length=5000, default=None, blank=True, null=True)
-    law_suit = models.ForeignKey(LawSuit, on_delete=models.CASCADE)
+    law_suit = models.ForeignKey(LawSuit, on_delete=models.CASCADE, related_name='judicial_appeals')
 
     def __str__(self):
         return self.judicial_appeal_number

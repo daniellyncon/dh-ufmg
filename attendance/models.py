@@ -1,4 +1,6 @@
 from django.db import models
+
+from axis.models import Axis
 from entities.models import Entity
 from users.models import User
 from people.models import Person
@@ -7,14 +9,14 @@ from people.models import Person
 
 class Attendance(models.Model):
     assisted_person = models.ForeignKey(Person, on_delete=models.SET_NULL,
-                                        related_name="atendimento", blank=True, null=True)
+                                        related_name="attendance", blank=True, null=True)
 
+    axis = models.ManyToManyField(Axis, related_name='attendance_axis')
     how_knew_about_drs = models.CharField(max_length=100, blank=True, null=True)
     current_occupation = models.CharField(max_length=100, blank=True, null=True)
     had_other_occupations = models.CharField(max_length=100, blank=True, null=True)
     relevant_information = models.CharField(max_length=100, blank=True, null=True)
-    entities = models.ManyToManyField(Entity, related_name="entity")
-    last_attendance_date = models.DateField()
+    last_attendance_date = models.DateField(blank=True, null=True)
 
     how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True)
     psychology_intern = models.ForeignKey(User, verbose_name="Estagiária de psicologia", blank=True, null=True,

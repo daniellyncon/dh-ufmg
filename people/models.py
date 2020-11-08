@@ -1,8 +1,6 @@
 from django.db import models
 from users.models import User
-# from cases.models import Case
 from documents.models import Document
-from datetime import date
 from address.models import Address
 
 
@@ -18,20 +16,22 @@ class Person(models.Model):
                          ('5', 'Ensino superior incompleto'), ('6', 'Ensino superior completo'))
 
     CASE_BOND_CHOICES = (('1', 'assistido'), ('2', 'jurisdicionado'), ('3', 'atingido'), ('4', 'terceiro'),
-                         ('5', 'interessado'), ('6', 'outro'))
+                         ('5', 'interessado'), ('6', 'outro'), ('7', 'test'))
 
     LAW_SUIT_CHOICES = (('1', 'parte autora'), ('2', 'parte ré'), ('3', 'terceiro'), ('4', 'interessado'))
 
     assisted = models.BooleanField(verbose_name="Pessoa assistida?", blank=True, null=True)
-    responsible_advisor = models.ManyToManyField(User, verbose_name="Orientadora responsável", related_name="p_advisor")
-    responsible_intern = models.ManyToManyField(User, verbose_name="Estagiária responsável", related_name="p_intern")
+    responsible_advisor = models.ManyToManyField(User, blank=True, related_name="p_advisor")
+    responsible_intern = models.ManyToManyField(User, blank=True, related_name="p_intern")
     first_appointment_date = models.DateField(blank=True, null=True)
     full_name = models.CharField(verbose_name="Nome completo", max_length=100, default="")
     mother_name = models.CharField(verbose_name="Nome da mãe", max_length=100, default="")
 
     civil_registry = models.CharField(verbose_name="Registro civil", max_length=100, blank=True, null=True)
-    civil_status = models.CharField(verbose_name="Estado civíl", choices=CIVIL_STATUS_CHOICES, max_length=50, blank=True, null=True)
-    schooling = models.CharField(verbose_name="Escolaridade", choices=SCHOOLING_CHOICES, max_length=50, blank=True, null=True)
+    civil_status = models.CharField(verbose_name="Estado civíl", choices=CIVIL_STATUS_CHOICES, max_length=50,
+                                    blank=True, null=True)
+    schooling = models.CharField(verbose_name="Escolaridade", choices=SCHOOLING_CHOICES, max_length=50, blank=True,
+                                 null=True)
 
     # Identificação
     rg = models.CharField(verbose_name="RG", max_length=20, blank=True, null=True)
@@ -73,8 +73,6 @@ class Person(models.Model):
     contact_address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.SET_NULL,
                                         related_name='contact')
     # caso
-    # related_case = models.ForeignKey(Case, verbose_name="Caso relacionado", related_name="case",
-    #                                 blank=True, null=True)
     related_case_bond = models.CharField("Vínculo caso", max_length=30, blank=True, null=True,
                                          choices=CASE_BOND_CHOICES)
 
@@ -83,7 +81,7 @@ class Person(models.Model):
     related_law_suit_bond = models.CharField(verbose_name="Vínculo processo", choices=LAW_SUIT_CHOICES,
                                              max_length=50, blank=True, null=True)
 
-    document = models.ManyToManyField(Document, verbose_name="Documentos", blank=True)
+    document = models.ManyToManyField(Document, related_name="person_document", blank=True)
 
     def __str__(self):
         return self.full_name

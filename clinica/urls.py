@@ -27,7 +27,7 @@ from axis.views import AxisViewSet
 
 from people.views import PersonViewSet
 from attendance.views import AttendanceViewSet
-from judicial_appeal.views import JudicialAppealViewSet, JudicialAppealMoveViewSet
+from judicial_appeals.views import JudicialAppealViewSet, JudicialAppealMoveViewSet
 from law_suits.views import LawSuitViewSet
 from entities.views import EntityViewSet
 from documents.views import DocumentViewSet
@@ -41,12 +41,12 @@ router.register('cases', CaseViewSet)
 router.register('axes', AxisViewSet)
 router.register('people', PersonViewSet)
 router.register('attendance', AttendanceViewSet)
-router.register('judicial_appeal', JudicialAppealViewSet)
+router.register('judicial_appeals', JudicialAppealViewSet)
 router.register('judicial_appeal_move', JudicialAppealMoveViewSet)
 router.register('law_suits', LawSuitViewSet)
 router.register('entities', EntityViewSet)
 router.register('documents', DocumentViewSet)
-router.register('tasks', TaskViewSet)
+router.register('tasks', TaskViewSet, basename='tasks')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
