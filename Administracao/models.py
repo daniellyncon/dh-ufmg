@@ -35,7 +35,7 @@ class Documento(models.Model):
 
 class Tarefa(models.Model):
     title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
-    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None)
+    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
     is_done = models.BooleanField(("Feito"), default=False)
@@ -173,3 +173,6 @@ class Profile(models.Model):
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
 
     address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
