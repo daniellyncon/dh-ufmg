@@ -101,13 +101,13 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Tarefa)
 class TarefaAdmin(admin.ModelAdmin):
     list_display = ("title", "id")
-    list_filter = ("title",)
+    list_filter = ("deadline", "responsible", "is_done")
     autocomplete_fields = ()
     search_fields = ("title",)
     readonly_fields = ("id",)
     fieldsets = (
-        (None, {"fields": ("title", )}),
-        ("SegundaTab", {"fields": ()}),
+        (None, {"fields": ("title", "deadline", "description", "responsible", "is_done")}),
+        # ("SegundaTab", {"fields": ()}),
     )
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},

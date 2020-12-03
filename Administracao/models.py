@@ -23,24 +23,25 @@ class Documento(models.Model):
     recipients = models.CharField(_("Destinatários"), blank=True, null=True, default=None, max_length=150)
     date = models.DateField(_("Data"), auto_now=False, null=True, blank=True,
                             help_text="produção/recebimento/envio/protocolo")
-    link = models.URLField(_("Link"), max_length=50, default=None)
+    link = models.URLField(_("Link"), max_length=50, default=None, blank=True, null=True)
     prepared_by = models.ManyToManyField('Usuario', verbose_name=_("Elaborado por"), blank=True,
                                          related_name="developer")
-    axis = models.ManyToManyField('Eixo', related_name="document_axis")
-    tasks = models.ManyToManyField('Tarefa', related_name="document_task")
+    axis = models.ManyToManyField('Eixo', related_name="document_axis", blank=True)
+    tasks = models.ManyToManyField('Tarefa', related_name="document_task", blank=True)
 
     def __str__(self):
         return f"Documento n°{self.id}"
 
 
 class Tarefa(models.Model):
-    title = models.CharField(_("Título"), max_length=50, default=None)
+    title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
     deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None)
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
-    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True)
+    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
+    is_done = models.BooleanField(("Feito"), default=False)
 
     def __str__(self):
-        return f"Tarefa °{self.title} n°{self.id}"
+        return f"{self.title}"
 
 
 class Entidade(models.Model):
