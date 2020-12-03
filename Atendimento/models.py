@@ -101,12 +101,6 @@ class HistoricoRecurso(models.Model):
         verbose_name_plural = "Movimentações no recurso"
 
 
-# Endereço: REVISAR Bairro: REVISAR Cidade: REVISAR Estado: REVISAR
-# Cidades em que já viveu: REVISAR
-
-# Como soube do atendimento do Transpasse?:
-
-
 class Pessoa(models.Model):
     CIVIL_STATUS_CHOICES = (('1', 'Solteira'), ('2', 'Casada'), ('3', 'Separada'), ('4', 'Divorciada'),
                             ('5', 'Viúva'))
@@ -118,10 +112,10 @@ class Pessoa(models.Model):
                          ('3', 'Ensino médio incompleto'), ('4', 'Ensino médio completo'),
                          ('5', 'Ensino superior incompleto'), ('6', 'Ensino superior completo'))
 
-    CASE_BOND_CHOICES = (('1', 'assistido'), ('2', 'jurisdicionado'), ('3', 'atingido'), ('4', 'terceiro'),
-                         ('5', 'interessado'), ('6', 'outro'), ('7', 'test'))
+    CASE_BOND_CHOICES = (('1', 'Assistido'), ('2', 'Jurisdicionado'), ('3', 'Atingido'), ('4', 'Terceiro'),
+                         ('5', 'Interessado'), ('6', 'Outro'))
 
-    LAW_SUIT_CHOICES = (('1', 'parte autora'), ('2', 'parte ré'), ('3', 'terceiro'), ('4', 'interessado'))
+    LAW_SUIT_CHOICES = (('1', 'Parte autora'), ('2', 'Parte ré'), ('3', 'Terceiro'), ('4', 'interessado'))
 
     assisted = models.BooleanField(verbose_name="Pessoa assistida?", blank=True, null=True)
     responsible_advisor = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="p_advisor",
@@ -193,30 +187,96 @@ class Pessoa(models.Model):
     def __str__(self):
         return self.full_name
 
-    def idade(self):
-        if self.birthday:
-            today = datetime.date.today()
-            return today.year - self.birthday.year - ((today.month, today.day) <
-                                                      (self.birthday.month, self.birthday.day))
-        else:
-            return ''
-
     class Meta:
         verbose_name_plural = "Pessoas"
 
 
-
-# Tem algum problema de saúde?: REVISAR
-# Os exames de IST estão em dia?: REVISAR
-# Quando foi a última vez que foi a um posto de saúde?:
-# Faz uso de álcool e drogas?: REVISAR
-# Se sim, considera o uso prejudicial?:
-# Faz uso de hormônios?:  . Qual hormônio?
-
-
 class AtendimentoTranspasse(models.Model):
-    pass
+    assisted_person = models.ForeignKey('Pessoa', on_delete=models.SET_NULL, blank=True, null=True,
+                                        related_name="atendimento_transpasse")
+
+    axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
+
+    FREQUENCY_HEALTH_CENTER_CHOICES = (('1', "Vou com frequência"), ('2', '1 a 3 meses atrás'),
+                                       ('3', '3 a 6 meses atrás'), ('4', 'Mais de 6 meses'), ('5', 'Mais de um ano'))
+
+
+    how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True,
+                                                 verbose_name="Como soube do Transpasse")
+    psychology_intern = models.ForeignKey('Administracao.Usuario', verbose_name="Estagiária de psicologia responsável",
+                                          blank=True, null=True, on_delete=models.SET_NULL)
+    lives_with = models.CharField(max_length=100, blank=True, null=True, verbose_name="Com quem mora")
+    cities_lived = models.CharField(max_length=100, blank=True, null=True, verbose_name="Cidades por onde passou")
+    ist_exams_up_to_date = models.BooleanField(default=False, verbose_name="Exames IST em dia")
+    last_time_been_health_center = models.CharField(max_length=100, blank=True, null=True,
+                                                    choices=FREQUENCY_HEALTH_CENTER_CHOICES,
+                                                    verbose_name="Última vez que foi ao posto de saúde")
+    is_drug_user = models.BooleanField(default=False, blank=True, null=True, verbose_name="Faz uso de álcool e drogas")
+    which_drugs = models.CharField(max_length=100, blank=True, null=True, verbose_name="Quais drogas usa")
+    consider_drugs_bad = models.BooleanField(default=False, verbose_name="Considera o uso prejudicial")
+    uses_hormones = models.BooleanField(default=False, blank=True, null=True, verbose_name="Faz uso de hormônios")
+    use_accompanied_by_doctor = models.BooleanField(default=False, blank=True, null=True,
+                                                    verbose_name="Uso acompanhado por médico")
+    which_hormones = models.CharField(max_length=100, blank=True, null=True, verbose_name="Qual(is) hormônios")
+    works = models.BooleanField(default=False, blank=True, null=True, verbose_name="Trabalha?")
+    where_works = models.CharField(max_length=100, blank=True, null=True, verbose_name="Onde trabalha")
+    already_worked = models.BooleanField(default=False, blank=True, null=True, verbose_name="Já trabalhou")
+    where_worked = models.CharField(max_length=100, blank=True, null=True, verbose_name="Onde trabalhou")
+    interests = models.CharField(max_length=100, blank=True, null=True, verbose_name="Quais são seus interesses")
+    makes_track = models.BooleanField(default=False, blank=True, null=True, verbose_name="Faz pista?")
+    track_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Tipo de pista")
+    where_makes_track = models.CharField(max_length=100, blank=True, null=True, verbose_name="Onde faz pista")
+    documents_owned = models.CharField(max_length=100, blank=True, null=True, verbose_name="Quais documentos possui")
+    rectified_name_and_gender = models.BooleanField(default=False, blank=True, null=True,
+                                                    verbose_name="Nome e gênero retificados?")
+    willing_to_rectify = models.BooleanField(default=False, blank=True, null=True, verbose_name="Deseja retificar?")
+    been_arrested = models.BooleanField(default=False, blank=True, null=True, verbose_name="Já foi presa?")
+    city_arrested = models.CharField(max_length=100, blank=True, null=True, verbose_name="Cidade em que foi  presa")
+    year_arrested = models.CharField(max_length=20, blank=True, null=True, verbose_name="Ano da prisão")
+    was_processed = models.BooleanField(default=False, blank=True, null=True, verbose_name="Tem processo")
+
+    def __str__(self):
+        return f'Ficha N°{self.id}'
+
+    class Meta:
+        verbose_name = "Ficha Transpasse"
+        verbose_name_plural = "Fichas Transpasse"
 
 
 class AtendimentoDRS(models.Model):
-    pass
+    assisted_person = models.ForeignKey('Pessoa',  on_delete=models.SET_NULL, blank=True, null=True,
+                                        related_name="atendimento_drs")
+
+    axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
+
+    how_knew_about_drs = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Como soube do DRS"))
+    current_occupation = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Ocupação atual"))
+    had_other_occupations = models.CharField(max_length=100, blank=True, null=True,
+                                             verbose_name=_("Teve outros trabalhos"))
+    relevant_information = models.TextField(max_length=900, blank=True, null=True,
+                                            verbose_name="Informações relevantes",
+                                            help_text="exemplos: uso de drogas, trajetória/situação de rua, "
+                                                      "violência doméstica, abuso sexual")
+    reference_entities = models.OneToOneField(Entidade, blank=True, null=True, verbose_name="Entidade de referência",
+                                              on_delete=models.SET_NULL)
+    follow_up_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Tipo de acompanhamento")
+    last_attendance_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Ficha DRS"
+        verbose_name_plural = "Fichas DRS"
+
+
+class AcompanhamentoTranspasse(models.Model):
+    comments = models.TextField(max_length=2000, default='', verbose_name="Observações",
+                                help_text="Tarefas/Acompanhamentos/Atendimentos")
+    atendimento_transpasse = models.ForeignKey(AtendimentoTranspasse, on_delete=models.CASCADE)
+
+
+class AcompanhamentoDRS(models.Model):
+    comments = models.TextField(max_length=2000, default='', verbose_name="Observações",
+                                help_text="Tarefas/Acompanhamentos/Atendimentos")
+    atendimento_drs = models.ForeignKey(AtendimentoDRS, on_delete=models.CASCADE)
+
+
+

@@ -34,7 +34,10 @@ class Documento(models.Model):
 
 
 class Tarefa(models.Model):
-    title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
+    title = models.CharField(_("Título"), max_length=50, default=None)
+    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None)
+    description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
+    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True)
 
     def __str__(self):
         return f"Tarefa °{self.title} n°{self.id}"

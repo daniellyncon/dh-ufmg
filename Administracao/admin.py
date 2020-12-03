@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Profile, Plantao, Perfil
+from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil
 from .models import Usuario
 from django.contrib.auth.models import Group
 from .widgets import CustomDateInput
