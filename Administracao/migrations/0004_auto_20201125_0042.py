@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name='usuario',
-            options={'verbose_name_plural': 'Usuárias'},
+            options={'verbose_name_plural': 'Usuários'},
         ),
         migrations.RemoveField(
             model_name='perfil',

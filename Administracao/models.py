@@ -143,7 +143,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return
 
     class Meta:
-        verbose_name_plural = "Usuárias"
+        verbose_name_plural = "Usuários"
 
 
 class Profile(models.Model):
