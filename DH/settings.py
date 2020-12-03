@@ -299,3 +299,8 @@ JAZZMIN_UI_TWEAKS = {
 ################
 # App settings #
 ################
+
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
