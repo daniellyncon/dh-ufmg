@@ -34,7 +34,10 @@ class Documento(models.Model):
 
 
 class Tarefa(models.Model):
-    title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
+    title = models.CharField(_("Título"), max_length=50, default=None)
+    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None)
+    description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
+    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True)
 
     def __str__(self):
         return f"Tarefa °{self.title} n°{self.id}"
@@ -144,28 +147,3 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name_plural = "Usuárias"
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    SCHOLARSHIP_CHOICES = (('1', 'Bolsista'), ('2', 'Voluntário'))
-    BOND_TYPE_CHOICES = (('1', 'Coordenador'), ('2', 'Orientador'), ('3', 'Estagiário'), ('4', 'Colaborador Eventual'))
-
-    name = models.CharField(_("Nome"), max_length=100, blank=True, null=True)
-    rg = models.CharField(_("RG"), max_length=20, blank=True, null=True)
-    cpf = models.CharField(_("CPF"), max_length=50, blank=True, null=True)
-    cnh = models.CharField(_("CNH"), max_length=50, blank=True, null=True)
-    bond_type = models.CharField(_("Tipo de vínculo"), max_length=50, blank=True, null=True, choices=BOND_TYPE_CHOICES)
-    phone = models.CharField(_("Telefone"), max_length=15, blank=True, null=True)
-    registration = models.CharField(_("Nº de matrícula"), max_length=50, blank=True, null=True)
-
-    course = models.CharField(_("Curso"), max_length=50, blank=True, null=True)
-    university = models.CharField(_("Universidade"), max_length=50, blank=True, null=True)
-    department = models.CharField(_("Departamento"), max_length=50, blank=True, null=True)
-
-    date_fired = models.DateField(_("Data de desligamento"), default=None, blank=True, null=True)
-
-    scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True, choices=SCHOLARSHIP_CHOICES)
-    scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
-
-    address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
