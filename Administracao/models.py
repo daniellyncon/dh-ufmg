@@ -126,14 +126,25 @@ class Perfil(models.Model):
 
     class Meta:
         verbose_name_plural = "Perfis"
+    
+    def __str__(self):
+        return self.name
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
+<<<<<<< HEAD
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateField(default=timezone.now)
     last_login = models.DateField(_('last login'), blank=True, null=True)
+=======
+    email = models.EmailField(_('Endereço de e-mail'), unique=True)
+    is_staff = models.BooleanField(("É da equipe"), default=True)
+    is_active = models.BooleanField(("Está ativo"), default=True)
+    date_joined = models.DateField(("Data de Entrada"), default=timezone.now)
+    last_login = models.DateField(_('Último login'), blank=True, null=True)
+>>>>>>> Detalhes
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -185,7 +196,7 @@ class Profile(models.Model):
 
 
 class Frase(models.Model):
-    content = models.TextField(_("Conteúdo"), max_length=500)
+    content = models.CharField(_("Conteúdo"), max_length=500)
     source = models.CharField(_("Fonte"), max_length=50, default=None, blank=True, null=True)
 
     def __str__(self):
