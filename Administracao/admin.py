@@ -51,7 +51,6 @@ class ProfileInline(admin.StackedInline):
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, )
-
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
@@ -79,10 +78,10 @@ class CustomUserAdmin(UserAdmin):
         return obj.perfil.name
 
     def get_bond_type(self, obj):
-        return obj.perfil.bond_type
+        return obj.perfil.get_bond_type_display()
 
     def get_axis(self, obj):
-        return obj.profile.axis.name
+        return obj.perfil.get_axis
 
     get_name.admin_order_field = 'perfil'  # Allows column order sorting
     get_name.short_description = 'Nome'  # Renames column head
@@ -123,7 +122,6 @@ class EixoAdmin(admin.ModelAdmin):
         (None, {"fields": ("name", )}),
         # ("SegundaTab", {"fields": ()}),
     )
-
 
 
 @admin.register(Entidade)

@@ -38,7 +38,7 @@ class Tarefa(models.Model):
     deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
-    is_done = models.BooleanField(("Feito"), default=False)
+    is_done = models.BooleanField(_("Feito"), default=False)
 
     def __str__(self):
         return f"{self.title}"
@@ -126,6 +126,9 @@ class Perfil(models.Model):
 
     class Meta:
         verbose_name_plural = "Perfis"
+
+    def get_axis(self):
+        return ",".join([str(p) for p in self.axis.all()])
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
