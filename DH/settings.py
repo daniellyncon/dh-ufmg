@@ -120,12 +120,12 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Sao_Paulo'
 
-# LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 # English default
 gettext = lambda s: s  # NOQA
 LANGUAGES = (
-    ("pt", gettext("Portuguese")),
+    ("pt-BR", gettext("Portuguese")),
 )
 
 AUTH_USER_MODEL = 'Administracao.Usuario'
