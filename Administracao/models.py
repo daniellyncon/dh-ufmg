@@ -134,19 +134,11 @@ class Perfil(models.Model):
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-<<<<<<< HEAD
-    email = models.EmailField(_('email address'), unique=True)
-    is_staff = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateField(default=timezone.now)
-    last_login = models.DateField(_('last login'), blank=True, null=True)
-=======
     email = models.EmailField(_('Endereço de e-mail'), unique=True)
     is_staff = models.BooleanField(("É da equipe"), default=True)
     is_active = models.BooleanField(("Está ativo"), default=True)
     date_joined = models.DateField(("Data de Entrada"), default=timezone.now)
     last_login = models.DateField(_('Último login'), blank=True, null=True)
->>>>>>> Detalhes
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
