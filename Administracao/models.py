@@ -34,7 +34,7 @@ class Documento(models.Model):
 
 
 class Tarefa(models.Model):
-    title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
+    title = models.CharField(_("Título"), max_length=50)
     deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
@@ -182,3 +182,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Frase(models.Model):
+    content = models.TextField(_("Conteúdo"), max_length=500)
+    source = models.CharField(_("Fonte"), max_length=50, default=None, blank=True, null=True)
+
+    def __str__(self):
+        return f"Frase n°{self.id}"
+
+    class Meta:
+        verbose_name_plural = "Frases"
