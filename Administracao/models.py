@@ -176,3 +176,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Frase(models.Model):
+    content = models.TextField(_("Conteúdo"), max_length=500)
+    source = models.CharField(_("Fonte"), max_length=50, default=None, blank=True, null=True)
+
+    def __str__(self):
+        return f"Frase n°{self.id}"
+
+    class Meta:
+        verbose_name_plural = "Frases"

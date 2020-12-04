@@ -213,6 +213,7 @@ JAZZMIN_SETTINGS = {
         "Administracao.Entidade",
         "Administracao.Documento",
         "Administracao.Tarefa",
+        "Administracao.Frase",
         "Atendimento.Caso",
         "Atendimento.Pessoa",
         "Atendimento.Processo",
@@ -233,17 +234,17 @@ JAZZMIN_SETTINGS = {
     # for a list of icon classes
     "icons": {
         "auth": "fas fa-users-cog",
-        "Administracao.Usuario": "fas fa-user-friends",
-        "Atendimento.Pessoa": "fas fa-users",
         "admin.LogEntry": "fas fa-file",
+        "Administracao.Usuario": "fas fa-user-friends",
+        "Administracao.Eixo": "fas fa-hand-holding-heart",
+        "Administracao.Entidade": "fas fa-hands-helping",
+        "Administracao.Documento": "fas fa-file-invoice",
+        "Administracao.Tarefa": "fas fa-tasks",
+        "Administracao.Frase": "fas fa-comment-dots",
         "Atendimento.Caso": "fas fa-hands",
+        "Atendimento.Pessoa": "fas fa-users",
         "Atendimento.Processo": "fas fa-gavel",
         "Atendimento.Recurso": "fas fa-balance-scale-right",
-        "Atendimento.fas fa-file-signature": "fas fa-handshake",
-        "Administracao.Eixo": "fas fa-hand-holding-heart",
-        "Administracao.Tarefa": "fas fa-tasks",
-        "Administracao.Documento": "fas fa-file-invoice",
-        "Administracao.Entidade": "fas fa-hands-helping"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
