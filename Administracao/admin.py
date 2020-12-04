@@ -2,8 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
-from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Profile, Plantao, Perfil
-from .models import Usuario
+from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
 from django.contrib.auth.models import Group
 from .widgets import CustomDateInput
 from django.db import models
@@ -34,7 +33,6 @@ class PlantaoInline(admin.StackedInline):
 class EnderecoInline(admin.StackedInline):
     model = Endereco
     extra = 1
-    # readonly_fields = ("id", "duration")
     fields = (
         'street', 'number', 'complement', 'neighborhood', 'city', 'state'
     )
@@ -101,13 +99,13 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Tarefa)
 class TarefaAdmin(admin.ModelAdmin):
     list_display = ("title", "id")
-    list_filter = ("title",)
+    list_filter = ("deadline", "responsible", "is_done")
     autocomplete_fields = ()
     search_fields = ("title",)
     readonly_fields = ("id",)
     fieldsets = (
-        (None, {"fields": ("title", )}),
-        ("SegundaTab", {"fields": ()}),
+        (None, {"fields": ("title", "deadline", "description", "responsible", "is_done")}),
+        # ("SegundaTab", {"fields": ()}),
     )
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},
@@ -151,3 +149,8 @@ class DocumentoAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput(format='%dd/%mm/%YYYY')},
     }
+
+
+@admin.register(Frase)
+class FraseAdmin(admin.ModelAdmin):
+    list_display = ("id", "content", "source")

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from Administracao.admin import EnderecoInline
@@ -6,7 +8,7 @@ from .models import Caso, Processo, Recurso, HistoricoRecurso, Pessoa, Atendimen
 
 class RecursoInline(admin.StackedInline):
     model = Recurso
-    readonly_fields = ("id", )
+    # readonly_fields = ("pk", )
     fields = (
         'type', 'judicial_appeal_number', 'plenary', 'report', 'resume'
     )
@@ -123,16 +125,16 @@ class PessoaAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', )
     fieldsets = (
         ("Identificação", {"fields": ('first_appointment_date', 'full_name', 'civil_registry', 'rg', 'cpf',
-                                      'birth_city', 'birth_state', 'phone', 'contact_phone', 'birthday', 'idade',
+                                      'birth_city', 'birth_state', 'phone', 'contact_phone', 'birthday',
                                       'mother_name', 'civil_status', 'gender_identity',
                                       'preferred_pronouns', 'self_identification', 'schooling')}),
         # ("Saúde", {"fields": ("genre", "summary", "isbn", "published_on")}),
     )
     # raw_id_fields = ("author",)
-    readonly_fields = ("idade",)
-    list_display_links = ()
+    # readonly_fields = ("get_age",)
+    # list_display_links = ()
     # list_filter = ("author", "genre")
-    list_select_related = False
+    # list_select_related = False
     list_per_page = 20
     list_max_show_all = 100
     # list_editable = ("title",)
@@ -148,3 +150,12 @@ class PessoaAdmin(admin.ModelAdmin):
     actions_on_top = True
     actions_on_bottom = True
     actions_selection_counter = True
+
+    def get_age(self, kwargs):
+        if self.birthday:
+            today = datetime.date.today()
+            return today.year - self.birthday.year - (
+                    (today.month, today.day) < (self.birthday.month, self.birthday.day)
+            )
+        else:
+            return ''

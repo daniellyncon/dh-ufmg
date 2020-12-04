@@ -23,11 +23,11 @@ class Documento(models.Model):
     recipients = models.CharField(_("Destinatários"), blank=True, null=True, default=None, max_length=150)
     date = models.DateField(_("Data"), auto_now=False, null=True, blank=True,
                             help_text="produção/recebimento/envio/protocolo")
-    link = models.URLField(_("Link"), max_length=50, default=None)
+    link = models.URLField(_("Link"), max_length=50, default=None, blank=True, null=True)
     prepared_by = models.ManyToManyField('Usuario', verbose_name=_("Elaborado por"), blank=True,
                                          related_name="developer")
-    axis = models.ManyToManyField('Eixo', related_name="document_axis")
-    tasks = models.ManyToManyField('Tarefa', related_name="document_task")
+    axis = models.ManyToManyField('Eixo', related_name="document_axis", blank=True)
+    tasks = models.ManyToManyField('Tarefa', related_name="document_task", blank=True)
 
     def __str__(self):
         return f"Documento n°{self.id}"
@@ -35,10 +35,14 @@ class Documento(models.Model):
 
 
 class Tarefa(models.Model):
-    title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
+    title = models.CharField(_("Título"), max_length=50)
+    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
+    description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
+    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
+    is_done = models.BooleanField(("Feito"), default=False)
 
     def __str__(self):
-        return f"Tarefa °{self.title} n°{self.id}"
+        return f"{self.title}"
 
 
 class Entidade(models.Model):
@@ -128,7 +132,7 @@ class Perfil(models.Model):
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateField(default=timezone.now)
     last_login = models.DateField(_('last login'), blank=True, null=True)
@@ -138,14 +142,20 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    def __str__(self):
-        return self.email
+    # def __str__(self):
+    #     if self.profile is not None:
+    #         return self.profile.name
+    #     else:
+    #         return ''
 
     def get_name(self):
-        return
+        if self.profile:
+            return self.profile.name
+        else:
+            return ''
 
     class Meta:
-        verbose_name_plural = "Usuárias"
+        verbose_name_plural = "Usuários"
 
 
 class Profile(models.Model):
@@ -171,3 +181,17 @@ class Profile(models.Model):
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
 
     address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Frase(models.Model):
+    content = models.TextField(_("Conteúdo"), max_length=500)
+    source = models.CharField(_("Fonte"), max_length=50, default=None, blank=True, null=True)
+
+    def __str__(self):
+        return f"Frase n°{self.id}"
+
+    class Meta:
+        verbose_name_plural = "Frases"

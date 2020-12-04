@@ -64,7 +64,7 @@ ROOT_URLCONF = 'DH.urls'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates/')],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'pt'
+LANGUAGE_CODE = 'pt-BR'
 
 USE_I18N = True
 
@@ -120,13 +120,15 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Sao_Paulo'
 
-# LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = [
+    BASE_DIR / "locale"
+]
 
 # English default
 gettext = lambda s: s  # NOQA
-LANGUAGES = (
-    ("pt", gettext("Portuguese")),
-)
+LANGUAGES = [
+    ["pt-BR", gettext("Portuguese")],
+]
 
 AUTH_USER_MODEL = 'Administracao.Usuario'
 
@@ -134,14 +136,10 @@ AUTH_USER_MODEL = 'Administracao.Usuario'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
+MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -165,7 +163,7 @@ JAZZMIN_SETTINGS = {
     # Title on the brand, and the login screen (19 chars max)
     "site_header": "DH",
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    "site_logo": 'Clinica.jpg',
+    "site_logo": 'brand.png',
     # Welcome text on the login screen
     "welcome_sign": "Bem-vindo ao DH-UFMG",
     # Copyright on the footer
@@ -209,7 +207,18 @@ JAZZMIN_SETTINGS = {
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps to base side menu (app or model) ordering off of
-    "order_with_respect_to": ["Make Messages", "auth", "books", "books.author", "books.book", "loans", ],
+    "order_with_respect_to": [
+        "Administracao.Usuario",
+        "Administracao.Eixo",
+        "Administracao.Entidade",
+        "Administracao.Documento",
+        "Administracao.Tarefa",
+        "Administracao.Frase",
+        "Atendimento.Caso",
+        "Atendimento.Pessoa",
+        "Atendimento.Processo",
+        "Atendimento.Recurso"
+    ],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "loans": [
@@ -225,17 +234,17 @@ JAZZMIN_SETTINGS = {
     # for a list of icon classes
     "icons": {
         "auth": "fas fa-users-cog",
-        "Administracao.Usuario": "fas fa-user-friends",
-        "Atendimento.Pessoa": "fas fa-users",
         "admin.LogEntry": "fas fa-file",
+        "Administracao.Usuario": "fas fa-user-friends",
+        "Administracao.Eixo": "fas fa-hand-holding-heart",
+        "Administracao.Entidade": "fas fa-hands-helping",
+        "Administracao.Documento": "fas fa-file-invoice",
+        "Administracao.Tarefa": "fas fa-tasks",
+        "Administracao.Frase": "fas fa-quote-left",
         "Atendimento.Caso": "fas fa-hands",
+        "Atendimento.Pessoa": "fas fa-users",
         "Atendimento.Processo": "fas fa-gavel",
         "Atendimento.Recurso": "fas fa-balance-scale-right",
-        "Atendimento.fas fa-file-signature": "fas fa-handshake",
-        "Administracao.Eixo": "fas fa-hand-holding-heart",
-        "Administracao.Tarefa": "fas fa-tasks",
-        "Administracao.Documento": "fas fa-file-invoice",
-        "Administracao.Entidade": "fas fa-hands-helping"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -289,3 +298,8 @@ JAZZMIN_UI_TWEAKS = {
 ################
 # App settings #
 ################
+
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
