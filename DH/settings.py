@@ -240,7 +240,7 @@ JAZZMIN_SETTINGS = {
         "Administracao.Entidade": "fas fa-hands-helping",
         "Administracao.Documento": "fas fa-file-invoice",
         "Administracao.Tarefa": "fas fa-tasks",
-        "Administracao.Frase": "fas fa-comment-dots",
+        "Administracao.Frase": "fas fa-quote-left",
         "Atendimento.Caso": "fas fa-hands",
         "Atendimento.Pessoa": "fas fa-users",
         "Atendimento.Processo": "fas fa-gavel",
