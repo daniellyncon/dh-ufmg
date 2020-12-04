@@ -31,7 +31,7 @@ class PlantaoInline(admin.StackedInline):
     )
 
 
-class EnderecoInline(InlineModelAdmin):
+class EnderecoInline(admin.StackedInline):
     model = Endereco
     extra = 1
     # readonly_fields = ("id", "duration")
@@ -52,10 +52,10 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
+    inlines = (ProfileInline, EnderecoInline)
 
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email',)}),
         # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
@@ -84,7 +84,7 @@ class CustomUserAdmin(UserAdmin):
         return obj.perfil.bond_type
 
     def get_axis(self, obj):
-        return obj.profile.axis.name
+        return obj.perfil.axis.name
 
     get_name.admin_order_field = 'perfil'  # Allows column order sorting
     get_name.short_description = 'Nome'  # Renames column head

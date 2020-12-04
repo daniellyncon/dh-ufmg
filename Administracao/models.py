@@ -33,6 +33,7 @@ class Documento(models.Model):
         return f"Documento n°{self.id}"
 
 
+
 class Tarefa(models.Model):
     title = models.CharField(_("Título"), max_length=50, default='Tarefa sem título')
 
@@ -80,6 +81,7 @@ class Endereco(models.Model):
     state = models.CharField(max_length=2, help_text="UF do estado", verbose_name=_("Estado"))
     person = models.ForeignKey('Atendimento.Pessoa', blank=True, null=True, on_delete=models.CASCADE)
     entity = models.OneToOneField('Entidade', blank=True, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField('Usuario', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.street
