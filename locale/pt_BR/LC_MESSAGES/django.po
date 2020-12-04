@@ -37,7 +37,7 @@ msgstr ""
 
 #: templates/admin/base.html:297
 msgid "All rights reserved."
-msgstr "Todos direitos reservados."
+msgstr "Todos os direitos reservados."
 
 #: templates/admin/base.html:313
 msgid "UI Configuration"
