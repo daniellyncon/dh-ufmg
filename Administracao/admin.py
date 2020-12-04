@@ -34,7 +34,6 @@ class PlantaoInline(admin.StackedInline):
 class EnderecoInline(InlineModelAdmin):
     model = Endereco
     extra = 1
-    # readonly_fields = ("id", "duration")
     fields = (
         'street', 'number', 'complement', 'neighborhood', 'city', 'state'
     )

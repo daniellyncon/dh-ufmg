@@ -130,7 +130,7 @@ class Perfil(models.Model):
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateField(default=timezone.now)
     last_login = models.DateField(_('last login'), blank=True, null=True)
@@ -140,11 +140,17 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    def __str__(self):
-        return self.email
+    # def __str__(self):
+    #     if self.profile is not None:
+    #         return self.profile.name
+    #     else:
+    #         return ''
 
     def get_name(self):
-        return
+        if self.profile:
+            return self.profile.name
+        else:
+            return ''
 
     class Meta:
         verbose_name_plural = "Usuários"

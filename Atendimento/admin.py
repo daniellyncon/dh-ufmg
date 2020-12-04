@@ -132,9 +132,9 @@ class PessoaAdmin(admin.ModelAdmin):
     )
     # raw_id_fields = ("author",)
     # readonly_fields = ("get_age",)
-    list_display_links = ()
+    # list_display_links = ()
     # list_filter = ("author", "genre")
-    list_select_related = False
+    # list_select_related = False
     list_per_page = 20
     list_max_show_all = 100
     # list_editable = ("title",)
