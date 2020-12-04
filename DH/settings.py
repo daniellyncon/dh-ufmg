@@ -64,7 +64,7 @@ ROOT_URLCONF = 'DH.urls'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates/')],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -120,13 +120,15 @@ USE_TZ = True
 
 TIME_ZONE = 'America/Sao_Paulo'
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = [
+    BASE_DIR / "locale"
+]
 
 # English default
 gettext = lambda s: s  # NOQA
-LANGUAGES = (
-    ("pt-BR", gettext("Portuguese")),
-)
+LANGUAGES = [
+    ["pt-BR", gettext("Portuguese")],
+]
 
 AUTH_USER_MODEL = 'Administracao.Usuario'
 
@@ -134,14 +136,10 @@ AUTH_USER_MODEL = 'Administracao.Usuario'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
+MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
