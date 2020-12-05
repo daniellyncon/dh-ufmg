@@ -6,6 +6,7 @@ from .managers import CustomUserManager
 from django.utils import timezone
 from datetime import date
 
+
 class Eixo(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Nome"))
 
@@ -93,7 +94,7 @@ class Endereco(models.Model):
     user = models.OneToOneField('Usuario', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.street
+        return f'Rua {self.street} n°{self.number}'
 
 
 class Plantao(models.Model):
@@ -131,6 +132,7 @@ class Perfil(models.Model):
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
 
     class Meta:
+        verbose_name = "Perfil"
         verbose_name_plural = "Perfis"
 
     def __str__(self):
@@ -160,6 +162,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         verbose_name_plural = "Usuários"
+        ordering = ['perfil']
 
 
 class Frase(models.Model):

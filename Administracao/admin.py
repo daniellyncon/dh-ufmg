@@ -40,7 +40,7 @@ class EnderecoInline(admin.StackedInline):
 class ProfileInline(admin.StackedInline):
     model = Perfil
     can_delete = False
-    verbose_name_plural = 'Perfis'
+    verbose_name_plural = 'Perfil'
     fk_name = 'user'
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},
@@ -51,12 +51,11 @@ class ProfileInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, EnderecoInline)
     fieldsets = (
-        (None, {'fields': ('email',)}),
+        (None, {'fields': ('email', 'last_login', 'date_joined')}),
         # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+            'fields': ('is_active', 'groups', 'user_permissions'),
         }),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
@@ -68,9 +67,9 @@ class CustomUserAdmin(UserAdmin):
         models.DateField: {'widget': CustomDateInput},
     }
     list_display = ('get_name', 'get_bond_type', 'email', 'get_axis')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'perfil__axis')
-    search_fields = ('email', )
-    ordering = ('email',)
+    list_filter = ('is_superuser', 'is_active', 'perfil__axis')
+    search_fields = ("get_name", 'email', )
+    ordering = ()
     filter_horizontal = ('groups', 'user_permissions',)
 
     def get_name(self, obj):
@@ -103,7 +102,6 @@ class TarefaAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     fieldsets = (
         (None, {"fields": ("title", "deadline", "description", "responsible", "is_done")}),
-        # ("SegundaTab", {"fields": ()}),
     )
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},
@@ -124,7 +122,6 @@ class EixoAdmin(admin.ModelAdmin):
     readonly_fields = ("id",)
     fieldsets = (
         (None, {"fields": ("name", )}),
-        # ("SegundaTab", {"fields": ()}),
     )
 
 
