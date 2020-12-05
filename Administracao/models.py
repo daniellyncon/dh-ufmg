@@ -129,7 +129,6 @@ class Perfil(models.Model):
     date_fired = models.DateField(_("Data de desligamento"), default=None, blank=True, null=True)
     scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True, choices=SCHOLARSHIP_CHOICES)
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
-    address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Perfis"
