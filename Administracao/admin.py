@@ -96,7 +96,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Tarefa)
 class TarefaAdmin(admin.ModelAdmin):
-    list_display = ("title", "id")
+    list_display = ("get_responsibles", "title", "deadline", "is_done")
     list_filter = ("deadline", "responsible", "is_done")
     autocomplete_fields = ()
     search_fields = ("title",)
@@ -108,6 +108,11 @@ class TarefaAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},
     }
+
+    def get_responsibles(self, obj):
+        return ", ".join([e.perfil.name for e in obj.responsible.all()])
+
+    get_responsibles.short_description = "Reponsáveis"
 
 
 @admin.register(Eixo)

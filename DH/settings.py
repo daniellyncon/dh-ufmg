@@ -150,8 +150,8 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
-DATE_INPUT_FORMATS = [
-    '%d/%m/%Y'
+FORMAT_MODULE_PATH = [
+    'Administracao.formats',
 ]
 
 ########################
@@ -293,10 +293,6 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": True,
     "sidebar_nav_flat_style": True
 }
-################
-# App settings #
-################
-
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import PermissionsMixin
 from .managers import CustomUserManager
 from django.utils import timezone
-
+from datetime import date
 
 class Eixo(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Nome"))
@@ -37,6 +37,14 @@ class Tarefa(models.Model):
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
     is_done = models.BooleanField(_("Feito"), default=False)
+
+    @property
+    def is_past(self):
+        return self.deadline < date.today() if self.deadline else False
+
+    @property
+    def is_today(self):
+        return self.deadline == date.today() if self.deadline else False
 
     def __str__(self):
         return f"{self.title}"
