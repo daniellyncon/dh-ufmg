@@ -1,0 +1,938 @@
+[
+{
+  "model": "Administracao.frase",
+  "pk": 1,
+  "fields": {
+    "content": "The first person to climb a tree could claim tangible progress toward reaching the moon",
+    "source": "Hubert L. Dreyfus, 1992"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 2,
+  "fields": {
+    "content": "As pessoas vão mas como elas foram sempre fica",
+    "source": "Rupi Kaur, 2017"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 3,
+  "fields": {
+    "content": "Só acho que se desiludir é uma ótima forma de aprender sobre o mundo",
+    "source": "Filme: Mulheres do Século XX, 2016"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 4,
+  "fields": {
+    "content": "Só uma nuvem te separa das estrelas",
+    "source": "Paulo Leminski, Toda Poesia, 2013"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 5,
+  "fields": {
+    "content": "Isso de querer ser exatamente aquilo que a gente é ainda vai nos levar além",
+    "source": "Paulo Leminski, Toda Poesia, 2013"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 6,
+  "fields": {
+    "content": "I am my own ghost haunting the memories I love the most",
+    "source": "autor desconhecido"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 7,
+  "fields": {
+    "content": "Estou liberto e perdido",
+    "source": "Fernando Pessoa, 1982"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 8,
+  "fields": {
+    "content": "It's your life and its ending one minute at time",
+    "source": "Clube da Luta, 1999"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 9,
+  "fields": {
+    "content": "As soon as I saw you I knew an adventure was going to happen",
+    "source": "Winnie the Pooh"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 10,
+  "fields": {
+    "content": "As folhas das árvores servem para nos ensinar a cair sem alardes",
+    "source": "Manoel de Barros, 2006"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 11,
+  "fields": {
+    "content": "Em vida construímos coisas que são para sempre - never touching the things with just half of my heart",
+    "source": "Ana Vitória, 2018"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 12,
+  "fields": {
+    "content": "Quem anda no trilho é trem de ferro. Sou água que corre entre pedras. Liberdade caça jeito",
+    "source": "Manoel de Barros, 2001"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 13,
+  "fields": {
+    "content": "O tempo passa? Não passa [em amar se aprende amando]",
+    "source": "Drummond, 2001, intersecção anônima"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 14,
+  "fields": {
+    "content": "Não te espantes quando o mundo amanhecer irreconhecível. Para melhor ou pior, isso acontece muitas vezes por ano. \"Quem sou eu no mundo?\" Essa indagação perplexa é o lugar-comum de cada história de gente. Quantas vezes mais decifrares essa charada, tão entranhada em ti mesma como os teus ossos, mais forte ficarás. Não importa qual seja a resposta; o importante é dar ou inventar uma resposta. Ainda que seja mentira.",
+    "source": "Paulo Mendes Campos, Para Maria da Graça, 1965"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 15,
+  "fields": {
+    "content": "Parece-me – e é precisamente a isso que desejo chegar – ser este motor ético o impulso por trás do desdobramento expansivo dos direitos humanos, da abertura das comunidades morais e do processo constante e histórico de despositivação da lei – e, portanto, o motivo que permite explicá-los.",
+    "source": "Rita Laura Segato, 2006"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 16,
+  "fields": {
+    "content": "O tempo é uma cadeira ao sol e nada mais",
+    "source": "Drummond, 1973"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 17,
+  "fields": {
+    "content": "São mitos de calendário tanto o ontem como o agora, e o teu aniversário é um nascer a toda hora.",
+    "source": "Drummond, 1973"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 18,
+  "fields": {
+    "content": "Tudo que você precisará quando o universo acabar é de uma toalha",
+    "source": "Douglas Adams"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 19,
+  "fields": {
+    "content": "Hidrate-se agora mesmo!",
+    "source": null
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 20,
+  "fields": {
+    "content": "We need to remember what's important in life: Friends, waffles and work. Or waffles, friends, work. It doesn't matter. But work is third.",
+    "source": "Leslie Knope, Parks and Recreation"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 21,
+  "fields": {
+    "content": "Aprendi com as primaveras a deixar-me cortar e a voltar sempre inteira",
+    "source": "Cecília Meireles"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 22,
+  "fields": {
+    "content": "In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.",
+    "source": "Douglas Adams"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 23,
+  "fields": {
+    "content": "Jogging is the worst. I know it keeps you healthy, but God, at what cost?",
+    "source": "Ann Perkins"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 24,
+  "fields": {
+    "content": "Quando você é uma criança bonita, você se torna um adulto esquisito. Você não pode ser bonito a vida inteira.",
+    "source": "Renan, Choque de Cultura"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 25,
+  "fields": {
+    "content": "A magia está apenas no que os livros dizem, no modo como confeccionavam um traje para nós a partir de retalhos do universo.",
+    "source": "Fahrenheit 451"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 26,
+  "fields": {
+    "content": "Everything's got to end sometime. Otherwise nothing would ever get started.",
+    "source": "Doctor Who"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 27,
+  "fields": {
+    "content": "The way I see it, every life is a pile of good things and bad things. The good things don't always soften the bad things, but vice versa, the bad things don't always spoil the good things and make them unimportant.",
+    "source": "Doctor Who"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 28,
+  "fields": {
+    "content": "The universe is big. It's vast and complicated and ridiculous. And sometimes, very rarely, impossible things just happen and we call  them miracles.",
+    "source": "Doctor Who"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 29,
+  "fields": {
+    "content": "When life gives you lemonade, make lemons. Life will be all, 'Whaaat?'",
+    "source": "Phil Dunphy, Modern Family"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 30,
+  "fields": {
+    "content": "Sometimes I'll start a sentence and I don't even know where it's going. I just hope I find it along the way.",
+    "source": "Michael Scott, The Office"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 31,
+  "fields": {
+    "content": "A learning experience is one of those things that says, 'You know that thing you just did? Don't do that.'",
+    "source": "Douglas Adams"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 32,
+  "fields": {
+    "content": "Só se pode viver perto de outro, e conhecer outra pessoa, sem perigo de ódio, se a gente tem amor. Qualquer amor já é um  pouquinho de saúde, um descanso na loucura.",
+    "source": "Guimarães Rosa"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 33,
+  "fields": {
+    "content": "Eu quase que nada não sei. Mas desconfio de muita coisa.",
+    "source": "Guimarães Rosa"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 34,
+  "fields": {
+    "content": "Minha alucinação é suportar o dia a dia, e o meu delírio é a experiência com coisas reais.",
+    "source": "Belchior"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 35,
+  "fields": {
+    "content": "Tenho sangrado demais, tenho chorado pra cachorro. Ano passado eu morri, mas esse ano eu não morro.",
+    "source": "Belchior"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 36,
+  "fields": {
+    "content": "Sonhar mais um sonho impossível. Lutar quando é fácil ceder.",
+    "source": "Chico Buarque"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 37,
+  "fields": {
+    "content": "All we have to decide is what to do with the time that is given us. (Gandalf)",
+    "source": "J.R.R. Tolkien "
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 38,
+  "fields": {
+    "content": "A vida é feita de poucas certezas e muitos dar-se um jeito",
+    "source": "João Guimarães Rosa"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 39,
+  "fields": {
+    "content": "A esperança é como o sal, não alimenta, mas dá sabor ao pão.",
+    "source": "José Saramago "
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 40,
+  "fields": {
+    "content": "Entre a raiz e a flor, há o tempo",
+    "source": "Jorge de Lima"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 41,
+  "fields": {
+    "content": "Viver é um rasgar-se e remendar-se.",
+    "source": "João Guimarães Rosa "
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 42,
+  "fields": {
+    "content": "Vou mostrando como sou e vou sendo como posso",
+    "source": "Moraes Moreira"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 43,
+  "fields": {
+    "content": "Soy america latina, um pueblo sin piernas pero que camina",
+    "source": "Calle 13"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 44,
+  "fields": {
+    "content": "Ser livre é também querer livre os outros",
+    "source": "Simone de Beauvoir"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 45,
+  "fields": {
+    "content": "Passado é uma roupa que não nos serve mais",
+    "source": "Belchior"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 46,
+  "fields": {
+    "content": "Amar e mudar as coisas me interessa mais",
+    "source": "Belchior"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 47,
+  "fields": {
+    "content": "We need more love, not from men, but from ourselves and each other",
+    "source": "Rupi Kaur"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 48,
+  "fields": {
+    "content": "O amor é para herois",
+    "source": "Valter Hugo Mãe, 2011"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 49,
+  "fields": {
+    "content": "Quem ousa vence, Marcus. Pense nisso sempre que estiver diante de uma escolha difícil.",
+    "source": "A verdade sobre o caso Harry Quebert"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 50,
+  "fields": {
+    "content": "Quando nada acontece, há um milagre que não estamos vendo",
+    "source": "Guimarães Rosa"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 51,
+  "fields": {
+    "content": "Pies para qué los quiero si tengo alas para volar",
+    "source": "Frida Kahlo, 1953"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 52,
+  "fields": {
+    "content": "Aplica teu coração ao ensino e teus ouvidos às palavras que trazem conhecimento",
+    "source": "Provérbio 23: 12"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 53,
+  "fields": {
+    "content": "Se a sorte lhe sorriu, porque não sorrir de volta?",
+    "source": "Acima do sol, Skank"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 54,
+  "fields": {
+    "content": "Os filósofos não dizem nada que não possa dizer",
+    "source": "Amores imperfeitos, Skank"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 55,
+  "fields": {
+    "content": "Are we human? Or are we dancer?",
+    "source": "Human, The killers"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 56,
+  "fields": {
+    "content": "O mundo bem diante do nariz feliz aqui e não além",
+    "source": "Tão seu, Skank"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 57,
+  "fields": {
+    "content": "Nas aparências todos tão iguais, singularidades em ruína",
+    "source": "Desconstrução, Tiago Iorc"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 58,
+  "fields": {
+    "content": "Amar é decidir, e cada nova escolha é o que precisa ser",
+    "source": "Bilhetes, Tiago Iorc"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 59,
+  "fields": {
+    "content": "Somos livres como girassóis de Van Gogh.",
+    "source": "Baco Exu do Blues"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 60,
+  "fields": {
+    "content": "A esperança adiada deixa doente o coração, mas o desejo realizado é como a árvore da vida",
+    "source": "Provérbios 13:12"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 61,
+  "fields": {
+    "content": "Melhor do que o ouro é adquirir sabedoria",
+    "source": "Proverbios 16:16"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 62,
+  "fields": {
+    "content": "A memória do coração elimina as lembranças ruins e magnífica as boas, e graças a esse artifício, conseguimos suportar o passado.",
+    "source": "Gabriel Garcia Marquez"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 63,
+  "fields": {
+    "content": "O amor é uma estupidez intermitente, mas universal",
+    "source": "Valter Hugo Mãe, 2011"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 64,
+  "fields": {
+    "content": "Levanta, sacode a poeira, dá a volta por cima",
+    "source": "Beth Carvalho, 1993"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 65,
+  "fields": {
+    "content": "A vida é assim: esquenta e esfria, aperta e daí afrouxa, sossega e depois desinquieta. O que ela quer da gente é coragem.",
+    "source": "O grande sertão: Veredas. Guimarães Rosa, 1956"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 66,
+  "fields": {
+    "content": "Toda a vida é sonho, e os sonhos, sonhos são.",
+    "source": "A vida é sonho, Calderón de La Barca, 1635."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 67,
+  "fields": {
+    "content": "Aquela sensação que faz tirar o sapato e se sentir em casa é o amor quem nos dá",
+    "source": "Mãe Sampa, Paulo Vilela, 2019."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 68,
+  "fields": {
+    "content": "Gente é pra brilhar!",
+    "source": "Hino Então, Brilha!"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 69,
+  "fields": {
+    "content": "Mas não tem pressa, minha menina A tua vida há de fazer-te Libertina",
+    "source": "Alcova Libertina, 2011"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 70,
+  "fields": {
+    "content": "Chega tem hora que ri de dentro pra fora Não fica nem vai embora É o estado de poesia.",
+    "source": "Estado de Poesia, Chico César, 2015."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 71,
+  "fields": {
+    "content": "Pisou na merda, agora abre os dedos.",
+    "source": "Sabedoria popular."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 72,
+  "fields": {
+    "content": "Tudo é vivido pela primeira vez e sem preparação.",
+    "source": "A insustentável leveza do ser. Milan Kundera, 1984."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 73,
+  "fields": {
+    "content": "Você acorda, perfeita. Bota a cara no sol, perfeita. Anda por aí, perfeita. Se exibe, perfeita.",
+    "source": "Flawless, Beyoncé e Chimamanda Ngozi Adichie, 2014."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 74,
+  "fields": {
+    "content": "Minha mãe achava estudo a coisa mais fina do mundo. Não é. A coisa mais fina do mundo é o sentimento.",
+    "source": "Ensinamento, Adélia Prado, 1975"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 75,
+  "fields": {
+    "content": "Aquí nadie es perfecto, todos cometemos errores Hace falta ser idiotas pa' aprender a ser mejores.",
+    "source": "Los idiotas, Calle 13, 2014."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 76,
+  "fields": {
+    "content": "Toda criatura precisa da ajuda dos outrso.",
+    "source": "A infanticida Marie Farrar, Bertold Brecht, 1927."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 77,
+  "fields": {
+    "content": "Você é luz, é raio estrela e luar.",
+    "source": "Fogo e paixão, Wando, 1985"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 78,
+  "fields": {
+    "content": "Levanta e resplandece.",
+    "source": "Resplandescente, Ventura Profana, 2019."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 79,
+  "fields": {
+    "content": "Deixa as pessoas.",
+    "source": "Mr. Catra, 2016."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 80,
+  "fields": {
+    "content": "A liberdade é terapêutica",
+    "source": "Princípio da Luta Antimanicomial Italiana"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 81,
+  "fields": {
+    "content": "Para que não se esqueça. Para que nunca aconteça. Por uma sociedade sem manicômios!",
+    "source": "Lema do Desfile do Dia da Luta Antimanicomial em BH, 2015. Homenagem a Franco Basaglia"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 82,
+  "fields": {
+    "content": "Viver e não ter a vergonha de ser feliz! Cantar (e cantar e cantar), a beleza de ser um eterno aprendiz. Eu sei que a vida devia ser bem melhor e será... Mas isso não impede que eu repita: é bonita, é bonita e é bonita!",
+    "source": "Gonzaguinha"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 83,
+  "fields": {
+    "content": "Não tente entender e o tempo dirá! A sina é sonhar",
+    "source": "Marisa Monte"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 84,
+  "fields": {
+    "content": "Não vou aceitar as coisas que não posso mudar. Vou mudar as coisas que não posso aceitar",
+    "source": "Angela Davis"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 85,
+  "fields": {
+    "content": "Quando tudo tiver esquisito e nada fizer sentido, é importante você lembrar que alguém te quer muito bem!",
+    "source": null
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 86,
+  "fields": {
+    "content": "A gente precisa refletir bastante para perceber as intersecções entre raça, classe e gênero, de forma a perceber que entre essas categorias existem relações que são mútuas e outras que são cruzadas. Ninguém pode assumir a primazia de uma sobre as outras",
+    "source": "Angela Davis, 2011"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 87,
+  "fields": {
+    "content": "Tudo no mundo é frágil, tudo passa",
+    "source": "Fanatismo, Florbela Espanca, 1923."
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 88,
+  "fields": {
+    "content": "Ouvi dizer que saudade era semente de uma planta bem bonita mas que nunca dava flor",
+    "source": "Lamparina e a Primavera, 2018"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 89,
+  "fields": {
+    "content": "Se não tivermos medo de adotar uma postura revolucionária - se desejarmos, de fato, ser radicais em nossa busca por mudança -, precisaremos atingir a raiz da nossa opressão. Afinal, radical significa simplesmente 'compreender as coisas desde a raiz'",
+    "source": "Angela Davis, 1987"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 90,
+  "fields": {
+    "content": "Deixe que a dúvida venha a respeito da vida, iluminado é aquele que já sabe o que é",
+    "source": "Gilsons, 2020 "
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 91,
+  "fields": {
+    "content": "Saudade até que é bom, melhor que caminhar vazio",
+    "source": "Caetano Veloso, 1982"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 92,
+  "fields": {
+    "content": "Tenho apenas duas mãos e o sentimento do mundo",
+    "source": "Carlos Drummond de Andrade, 1940"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 93,
+  "fields": {
+    "content": "A sabedoria está nas árvores, não nas janelas de vidro",
+    "source": "Jack Johnson, 2005"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 94,
+  "fields": {
+    "content": "Me sambe no Carnaval",
+    "source": "Liniker e os Caramelows, 2019"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 95,
+  "fields": {
+    "content": "Eu sei que o mundo é cheio de falhas, mas dissipe suas dores de cabeça e chame-o de casa.",
+    "source": null
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 96,
+  "fields": {
+    "content": "Que fazer? Meu pensamento está preso àquele Carnaval",
+    "source": "Gal Costa, 1998"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 97,
+  "fields": {
+    "content": "Vejo a vida passar num instante Será tempo o bastante que tenho pra viver? Não sei, não posso saber Quem segura o dia de amanhã na mão? Não há quem possa acrescentar um milímetro a cada estação Então, será tudo em vão? Banal? Sem razão? Seria, sim seria, se não fosse o amor",
+    "source": "Emicida e Pastor Henrique Viera, 2019"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 98,
+  "fields": {
+    "content": "E quando ela precisa de um abrigo da realidade, ela dá um mergulho nos meus devaneios",
+    "source": "Arctic Monkeys, 2013"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 99,
+  "fields": {
+    "content": "Levanta a cabeça e aceita: somos gostosas",
+    "source": "Pepita, Lia Clark , 2017"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 100,
+  "fields": {
+    "content": "Apesar de tudo eu ainda creio na bondade humana",
+    "source": "Anne Frank"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 101,
+  "fields": {
+    "content": "Grandes palavras são necessárias para expressar grandes ideias",
+    "source": "Anne with an E"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 102,
+  "fields": {
+    "content": "E eu não vou deixar minhas inseguranças definirem quem eu sou",
+    "source": "god save me, but don't drown me out, YUNGBLUD"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 103,
+  "fields": {
+    "content": "Nunca mais recuarei diante da verdade; pois quanto mais tardamos a dizê",
+    "source": "la; mais difícil torna"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 104,
+  "fields": {
+    "content": "So you can drag me through hell If it meant I could hold your hand.",
+    "source": "Follow You, Bring Me The Horizon"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 105,
+  "fields": {
+    "content": "Muitos de nós somos ótimos para a sociedade, mas, ao mesmo tempo, carrascos de nós mesmos.",
+    "source": "Augusto Cury, 2016"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 106,
+  "fields": {
+    "content": "Na filosofia, a dúvida é o princípio da sabedoria.",
+    "source": "Augusto Cury, 2016"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 107,
+  "fields": {
+    "content": "A inteligência é a insolência educada.",
+    "source": "Aristóteles"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 108,
+  "fields": {
+    "content": "A natureza não faz nada em vão.",
+    "source": "Aristóteles"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 109,
+  "fields": {
+    "content": "A maneira mais fácil e mais segura de vivermos honradamente consiste em sermos, na realidade, o que parecemos ser.",
+    "source": "Sócrates"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 110,
+  "fields": {
+    "content": "Uma vida sem desafios não vale a pena ser vivida.",
+    "source": "Sócrates"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 111,
+  "fields": {
+    "content": "Você pode ter todo o dinheiro do mundo, mas tem uma coisa que você nunca conseguirá comprar: um dinossauro!",
+    "source": "Homer Simpson"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 112,
+  "fields": {
+    "content": "Live, travel, adventure, bless, and don't be sorry",
+    "source": null
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 113,
+  "fields": {
+    "content": "The limit does not exist!",
+    "source": "Cady em Meninas Malvadas"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 114,
+  "fields": {
+    "content": "The best teacher is experience and not through someone's distorted point of view.",
+    "source": "Jack Kerouac"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 115,
+  "fields": {
+    "content": "Hell! I'm glad I did it. It's going to be a change. I call this life!",
+    "source": "Jack Kerouac"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 116,
+  "fields": {
+    "content": "Vontade de não dar sentido algum às coisas, às palavras e à própria vida. Assim como é a vida na realidade ausente de sentido.",
+    "source": "Hilda Hilst"
+  }
+},
+{
+  "model": "Administracao.frase",
+  "pk": 117,
+  "fields": {
+    "content": "Quero brincar, meus amigos, de ver beleza nas coisas",
+    "source": "Hilda Hilst"
+  }
+}
+]

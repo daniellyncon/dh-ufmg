@@ -161,7 +161,7 @@ JAZZMIN_SETTINGS = {
     # Title on the brand, and the login screen (19 chars max)
     "site_header": "DH",
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    "site_logo": 'brand.png',
+    "site_logo": 'images/brand.png',
     # Welcome text on the login screen
     "welcome_sign": "Bem-vindo ao DH-UFMG",
     # Copyright on the footer
