@@ -3,7 +3,9 @@ import datetime
 from django.contrib import admin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from Administracao.admin import EnderecoInline
+from Administracao.widgets import CustomDateInput
 from .models import Caso, Processo, Recurso, HistoricoRecurso, Pessoa, AtendimentoTranspasse, AtendimentoDRS
+from django.db import models
 
 
 class RecursoInline(admin.StackedInline):
@@ -87,6 +89,10 @@ class ProcessoAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
+    formfield_overrides = {
+        models.DateField: {'widget': CustomDateInput},
+    }
+
 
 @admin.register(Recurso)
 class RecursoAdmin(admin.ModelAdmin):
@@ -109,6 +115,8 @@ class RecursoAdmin(admin.ModelAdmin):
     actions_on_top = True
     actions_on_bottom = True
     actions_selection_counter = True
+
+
 
 
 class PessoaInline(admin.StackedInline):
