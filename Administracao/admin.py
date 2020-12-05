@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
@@ -51,7 +50,6 @@ class ProfileInline(admin.StackedInline):
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, EnderecoInline)
-
     fieldsets = (
         (None, {'fields': ('email',)}),
         # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
@@ -79,10 +77,10 @@ class CustomUserAdmin(UserAdmin):
         return obj.perfil.name
 
     def get_bond_type(self, obj):
-        return obj.perfil.bond_type
+        return obj.perfil.get_bond_type_display()
 
     def get_axis(self, obj):
-        return obj.perfil.axis.name
+        return obj.perfil.get_axis()
 
     get_name.admin_order_field = 'perfil'  # Allows column order sorting
     get_name.short_description = 'Nome'  # Renames column head
@@ -98,7 +96,7 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Tarefa)
 class TarefaAdmin(admin.ModelAdmin):
-    list_display = ("title", "id")
+    list_display = ("get_responsibles", "title", "deadline", "is_done")
     list_filter = ("deadline", "responsible", "is_done")
     autocomplete_fields = ()
     search_fields = ("title",)
@@ -110,6 +108,11 @@ class TarefaAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.DateField: {'widget': CustomDateInput},
     }
+
+    def get_responsibles(self, obj):
+        return ", ".join([e.perfil.name for e in obj.responsible.all()])
+
+    get_responsibles.short_description = "Reponsáveis"
 
 
 @admin.register(Eixo)
@@ -123,7 +126,6 @@ class EixoAdmin(admin.ModelAdmin):
         (None, {"fields": ("name", )}),
         # ("SegundaTab", {"fields": ()}),
     )
-
 
 
 @admin.register(Entidade)

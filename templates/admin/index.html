@@ -22,7 +22,7 @@
     {% random_phrase as phrase %}
     {% if phrase %}
     <div class="w-100 pb-4">
-        <blockquote class="blockquote my-0 ml-2 mr-4">
+        <blockquote class="blockquote my-0 ml-2 mr-4 pb-1">
             <p class="mb-0">{{ phrase.content }}</p>
             {% if phrase.source %}
             <footer class="blockquote-footer">
@@ -34,6 +34,42 @@
     {% endif %}
 
     <div class="col-lg-9 col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h5 class="m-0">Tarefas pendentes</h5>
+                    </div>
+                    <div class="card-body">
+                        {% pending_tasks user as tasks %}
+                        {% if tasks %}
+                        <div class="table-responsive table-scroll">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Prazo</th>
+                                        <th>Descrição</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="max-height: 180px;">
+                                    {% for task in tasks %}
+                                    <tr class="{% if task.is_past %}text-danger{% elif task.is_today %}text-info{% endif %}">
+                                        <td>{{ task.title }}</td>
+                                        <td>{{ task.deadline|default_if_none:"Sem prazo" }}</td>
+                                        <td>{{ task.description|default:"Sem descrição"|truncatechars:100 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="lead text-bold text-center">Nenhuma tarefa pendente</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 {% for app in dashboard_list %}

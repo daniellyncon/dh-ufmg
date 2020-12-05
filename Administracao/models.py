@@ -1,12 +1,10 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
-from django.conf import settings
-from django.urls import reverse
+from django.contrib.auth.models import PermissionsMixin
 from .managers import CustomUserManager
 from django.utils import timezone
-
+from datetime import date
 
 class Eixo(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Nome"))
@@ -33,13 +31,20 @@ class Documento(models.Model):
         return f"Documento n°{self.id}"
 
 
-
 class Tarefa(models.Model):
     title = models.CharField(_("Título"), max_length=50)
     deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
     description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
-    is_done = models.BooleanField(("Feito"), default=False)
+    is_done = models.BooleanField(_("Feito"), default=False)
+
+    @property
+    def is_past(self):
+        return self.deadline < date.today() if self.deadline else False
+
+    @property
+    def is_today(self):
+        return self.deadline == date.today() if self.deadline else False
 
     def __str__(self):
         return f"{self.title}"
@@ -79,7 +84,7 @@ class Entidade(models.Model):
 class Endereco(models.Model):
     street = models.CharField(max_length=200, null=False, blank=False, verbose_name=_("Rua"))
     number = models.IntegerField(null=False, blank=False, verbose_name=_("Número"))
-    complement = models.CharField(max_length=200, null=False, blank=False, verbose_name=_("Complemento"))
+    complement = models.CharField(max_length=200, null=True, blank=True, verbose_name=_("Complemento"))
     neighborhood = models.CharField(max_length=50, null=False, blank=False, verbose_name=_("Bairro"))
     city = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Cidade"))
     state = models.CharField(max_length=2, help_text="UF do estado", verbose_name=_("Estado"))
@@ -104,7 +109,7 @@ class Plantao(models.Model):
 
 
 class Perfil(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Usuário"))
+    user = models.OneToOneField('Usuario', on_delete=models.CASCADE, verbose_name=_("Usuário"))
     SCHOLARSHIP_CHOICES = (('1', 'Bolsista'), ('2', 'Voluntário'))
     BOND_TYPE_CHOICES = (('1', 'Coordenador'), ('2', 'Orientador'), ('3', 'Estagiário'), ('4', 'Colaborador Eventual'))
 
@@ -124,20 +129,22 @@ class Perfil(models.Model):
     date_fired = models.DateField(_("Data de desligamento"), default=None, blank=True, null=True)
     scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True, choices=SCHOLARSHIP_CHOICES)
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
-    address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Perfis"
-    
+
     def __str__(self):
         return self.name
+
+    def get_axis(self):
+        return ",".join([str(p) for p in self.axis.all()])
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('Endereço de e-mail'), unique=True)
-    is_staff = models.BooleanField(("É da equipe"), default=True)
-    is_active = models.BooleanField(("Está ativo"), default=True)
-    date_joined = models.DateField(("Data de Entrada"), default=timezone.now)
+    is_staff = models.BooleanField(_("É da equipe"), default=True)
+    is_active = models.BooleanField(_("Está ativo"), default=True)
+    date_joined = models.DateField(_("Data de Entrada"), default=timezone.now)
     last_login = models.DateField(_('Último login'), blank=True, null=True)
 
     USERNAME_FIELD = 'email'
@@ -145,48 +152,14 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    # def __str__(self):
-    #     if self.profile is not None:
-    #         return self.profile.name
-    #     else:
-    #         return ''
-
-    def get_name(self):
-        if self.profile:
-            return self.profile.name
-        else:
-            return ''
+    def __str__(self):
+        try:
+            return self.perfil.name
+        except Perfil.DoesNotExist:
+            return f'Usuário n°{self.id}'
 
     class Meta:
         verbose_name_plural = "Usuários"
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    SCHOLARSHIP_CHOICES = (('1', 'Bolsista'), ('2', 'Voluntário'))
-    BOND_TYPE_CHOICES = (('1', 'Coordenador'), ('2', 'Orientador'), ('3', 'Estagiário'), ('4', 'Colaborador Eventual'))
-
-    name = models.CharField(_("Nome"), max_length=100, blank=True, null=True)
-    rg = models.CharField(_("RG"), max_length=20, blank=True, null=True)
-    cpf = models.CharField(_("CPF"), max_length=50, blank=True, null=True)
-    cnh = models.CharField(_("CNH"), max_length=50, blank=True, null=True)
-    bond_type = models.CharField(_("Tipo de vínculo"), max_length=50, blank=True, null=True, choices=BOND_TYPE_CHOICES)
-    phone = models.CharField(_("Telefone"), max_length=15, blank=True, null=True)
-    registration = models.CharField(_("Nº de matrícula"), max_length=50, blank=True, null=True)
-
-    course = models.CharField(_("Curso"), max_length=50, blank=True, null=True)
-    university = models.CharField(_("Universidade"), max_length=50, blank=True, null=True)
-    department = models.CharField(_("Departamento"), max_length=50, blank=True, null=True)
-
-    date_fired = models.DateField(_("Data de desligamento"), default=None, blank=True, null=True)
-
-    scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True, choices=SCHOLARSHIP_CHOICES)
-    scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
-
-    address = models.ForeignKey(Endereco, on_delete=models.SET_NULL, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Frase(models.Model):
