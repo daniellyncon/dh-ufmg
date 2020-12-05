@@ -200,7 +200,6 @@ class AtendimentoTranspasse(models.Model):
     FREQUENCY_HEALTH_CENTER_CHOICES = (('1', "Vou com frequência"), ('2', '1 a 3 meses atrás'),
                                        ('3', '3 a 6 meses atrás'), ('4', 'Mais de 6 meses'), ('5', 'Mais de um ano'))
 
-
     how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True,
                                                  verbose_name="Como soube do Transpasse")
     psychology_intern = models.ForeignKey('Administracao.Usuario', verbose_name="Estagiária de psicologia responsável",

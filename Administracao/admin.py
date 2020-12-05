@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
@@ -30,10 +29,9 @@ class PlantaoInline(admin.StackedInline):
     )
 
 
-class EnderecoInline(InlineModelAdmin):
+class EnderecoInline(admin.StackedInline):
     model = Endereco
     extra = 1
-    # readonly_fields = ("id", "duration")
     fields = (
         'street', 'number', 'complement', 'neighborhood', 'city', 'state'
     )
@@ -51,10 +49,9 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
-
+    inlines = (ProfileInline, EnderecoInline)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email',)}),
         # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
@@ -80,10 +77,10 @@ class CustomUserAdmin(UserAdmin):
         return obj.perfil.name
 
     def get_bond_type(self, obj):
-        return obj.perfil.bond_type
+        return obj.perfil.get_bond_type_display()
 
     def get_axis(self, obj):
-        return obj.profile.axis.name
+        return obj.perfil.get_axis()
 
     get_name.admin_order_field = 'perfil'  # Allows column order sorting
     get_name.short_description = 'Nome'  # Renames column head
@@ -129,7 +126,6 @@ class EixoAdmin(admin.ModelAdmin):
         (None, {"fields": ("name", )}),
         # ("SegundaTab", {"fields": ()}),
     )
-
 
 
 @admin.register(Entidade)
