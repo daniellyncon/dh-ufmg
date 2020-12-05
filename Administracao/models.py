@@ -1,9 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
-from django.conf import settings
-from django.urls import reverse
+from django.contrib.auth.models import PermissionsMixin
 from .managers import CustomUserManager
 from django.utils import timezone
 from datetime import date
@@ -31,7 +29,6 @@ class Documento(models.Model):
 
     def __str__(self):
         return f"Documento n°{self.id}"
-
 
 
 class Tarefa(models.Model):
@@ -87,7 +84,7 @@ class Entidade(models.Model):
 class Endereco(models.Model):
     street = models.CharField(max_length=200, null=False, blank=False, verbose_name=_("Rua"))
     number = models.IntegerField(null=False, blank=False, verbose_name=_("Número"))
-    complement = models.CharField(max_length=200, null=False, blank=False, verbose_name=_("Complemento"))
+    complement = models.CharField(max_length=200, null=True, blank=True, verbose_name=_("Complemento"))
     neighborhood = models.CharField(max_length=50, null=False, blank=False, verbose_name=_("Bairro"))
     city = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Cidade"))
     state = models.CharField(max_length=2, help_text="UF do estado", verbose_name=_("Estado"))
@@ -112,7 +109,7 @@ class Plantao(models.Model):
 
 
 class Perfil(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_("Usuário"))
+    user = models.OneToOneField('Usuario', on_delete=models.CASCADE, verbose_name=_("Usuário"))
     SCHOLARSHIP_CHOICES = (('1', 'Bolsista'), ('2', 'Voluntário'))
     BOND_TYPE_CHOICES = (('1', 'Coordenador'), ('2', 'Orientador'), ('3', 'Estagiário'), ('4', 'Colaborador Eventual'))
 
@@ -136,7 +133,7 @@ class Perfil(models.Model):
 
     class Meta:
         verbose_name_plural = "Perfis"
-    
+
     def __str__(self):
         return self.name
 
@@ -156,17 +153,11 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    # def __str__(self):
-    #     if self.profile is not None:
-    #         return self.profile.name
-    #     else:
-    #         return ''
-
-    def get_name(self):
-        if self.profile:
-            return self.profile.name
-        else:
-            return ''
+    def __str__(self):
+        try:
+            return self.perfil.name
+        except Perfil.DoesNotExist:
+            return f'Usuário n°{self.id}'
 
     class Meta:
         verbose_name_plural = "Usuários"
