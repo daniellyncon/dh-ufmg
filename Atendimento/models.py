@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from Administracao.models import Eixo, Tarefa, Documento, Endereco, Entidade
-import datetime
+from datetime import date
 
 
 class Caso(models.Model):
@@ -154,7 +154,7 @@ class Pessoa(models.Model):
     # nascimento
     birthday = models.DateField(verbose_name="Data de nascimento")
     birth_city = models.CharField(verbose_name="Cidade de nascimento", max_length=50, blank=True, null=True)
-    birth_state = models.CharField(verbose_name="Cidade de nascimento", max_length=50, blank=True, null=True)
+    birth_state = models.CharField(verbose_name="Estado de nascimento", max_length=50, blank=True, null=True)
 
     # saúde
     has_health_problem = models.BooleanField(verbose_name="Tem algum problema de saúde?", default=None, blank=True,
