@@ -180,7 +180,6 @@ class Pessoa(models.Model):
     related_person_bond = models.CharField(verbose_name="Vínculo pessoa relacionada",
                                            max_length=30, blank=True, null=True)
 
-    # ('has_health_problem', '', '', '', '', '', '', '',)
     # contato
     contact_email = models.EmailField(verbose_name=_("E-mail contato"), blank=True, null=True)
     contact_phone = models.CharField(verbose_name=_("Telefone contato"), max_length=20, blank=True, null=True)
