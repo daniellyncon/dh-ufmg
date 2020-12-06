@@ -128,6 +128,8 @@ LANGUAGES = [
     ["pt-BR", gettext("Portuguese")],
 ]
 
+DATE_INPUT_FORMATS = ('%d-%m-%Y','%Y-%m-%d')
+
 AUTH_USER_MODEL = 'Administracao.Usuario'
 
 # Static files (CSS, JavaScript, Images)
@@ -216,16 +218,16 @@ JAZZMIN_SETTINGS = {
         "Atendimento.Recurso"
     ],
     # Custom links to append to app groups, keyed on app name
-    "custom_links": {
-        "loans": [
-            {
-                "name": "Make Messages",
-                "url": "make_messages",
-                "icon": "fas fa-comments",
-                "permissions": ["loans.view_loan"],
-            }
-        ]
-    },
+    # "custom_links": {
+    #     "loans": [
+    #         {
+    #             "name": "Make Messages",
+    #             "url": "make_messages",
+    #             "icon": "fas fa-comments",
+    #             "permissions": ["loans.view_loan"],
+    #         }
+    #     ]
+    # },
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
     "icons": {
@@ -241,6 +243,8 @@ JAZZMIN_SETTINGS = {
         "Atendimento.Pessoa": "fas fa-users",
         "Atendimento.Processo": "fas fa-gavel",
         "Atendimento.Recurso": "fas fa-balance-scale-right",
+        "Atendimento.AtendimentoDRS": "fas fa-universal-access",
+        "Atendimento.AtendimentoTranspasse": "fas fa-fist-raised",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -268,7 +272,7 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - collapsible
     # - carousel
-    "changeform_format": "carousel",
+    "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs", },
     # Add a language dropdown into the admin
@@ -294,4 +298,4 @@ JAZZMIN_UI_TWEAKS = {
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 
-XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']

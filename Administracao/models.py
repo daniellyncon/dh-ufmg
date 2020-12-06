@@ -106,7 +106,7 @@ class Plantao(models.Model):
     user = models.ForeignKey('Usuario', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.day_of_the_week} {self.start_time} {self.end_time}'
+        return f'{self.get_day_of_the_week_display()} {self.start_time} {self.end_time}'
 
 
 class Perfil(models.Model):

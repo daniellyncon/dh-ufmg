@@ -24,6 +24,9 @@ class PlantaoInline(admin.StackedInline):
     extra = 1
     verbose_name = "Plantão"
     verbose_name_plural = 'Plantões'
+    min_num = 1
+    can_delete = True
+    show_change_link = True
     fields = (
         "day_of_the_week", "start_time", "end_time"
     )
@@ -35,6 +38,8 @@ class EnderecoInline(admin.StackedInline):
     fields = (
         'street', 'number', 'complement', 'neighborhood', 'city', 'state'
     )
+    verbose_name = 'Endereço'
+    verbose_name_plural = 'Endereços'
 
 
 class ProfileInline(admin.StackedInline):
@@ -49,10 +54,9 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, EnderecoInline)
+    inlines = (ProfileInline, EnderecoInline, PlantaoInline)
     fieldsets = (
         (None, {'fields': ('email', 'last_login', 'date_joined')}),
-        # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
             'fields': ('is_active', 'groups', 'user_permissions'),
         }),
