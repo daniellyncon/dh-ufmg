@@ -68,10 +68,19 @@ class Processo(models.Model):
                                             related_name="related_law_suit")
 
     def __str__(self):
-        return f'{self.law_suit_number}'
+        return f'Número do processo {self.law_suit_number}'
 
     class Meta:
         verbose_name_plural = "Processos"
+
+    def get_pessoas(self):
+        return ",".join([str(p) for p in self.related_people.all()])
+
+    def get_law_area(self):
+        return self.get_law_area_display()
+
+    def get_recursos(self):
+        return ",".join([str(p) for p in self.judicial_appeals.all()])
 
 
 class Recurso(models.Model):
@@ -89,7 +98,11 @@ class Recurso(models.Model):
                                  null=True)
 
     class Meta:
+        verbose_name = "Recurso"
         verbose_name_plural = "Recursos"
+
+    def __str__(self):
+        return f'{self.get_type_display()} n° {self.judicial_appeal_number}'
 
 
 class HistoricoRecurso(models.Model):
@@ -105,7 +118,7 @@ class Pessoa(models.Model):
     CIVIL_STATUS_CHOICES = (('1', 'Solteira'), ('2', 'Casada'), ('3', 'Separada'), ('4', 'Divorciada'),
                             ('5', 'Viúva'))
 
-    GENDER_CHOICES = (('1', 'Agênero'), ('2', 'Cisgênero'), ('3', 'Gênero fluido'), ('4', 'Transgênero'),
+    GENDER_CHOICES = (('1', 'Agênero'), ('2', 'Cisgênero'), ('3', 'Gênero flúido'), ('4', 'Transgênero'),
                       ('5', 'Crossdresser'), ('6', 'Drag Queen'), ('7', 'Não-binário'))
 
     SCHOOLING_CHOICES = (('1', 'Ensino fundamental incompleto'), ('2', 'Ensino fundamental completo'),
@@ -184,29 +197,34 @@ class Pessoa(models.Model):
 
     document = models.ManyToManyField('Administracao.Documento', verbose_name=_("Documentos"), blank=True)
 
+    axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
+
     def __str__(self):
         return self.full_name
 
     class Meta:
         verbose_name_plural = "Pessoas"
 
+    def get_related_cases(self):
+        return ",".join([str(c) for c in self.caso_set.all()])
+
 
 class AtendimentoTranspasse(models.Model):
-    assisted_person = models.ForeignKey('Pessoa', on_delete=models.SET_NULL, blank=True, null=True,
-                                        related_name="atendimento_transpasse")
-
-    axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
-
     FREQUENCY_HEALTH_CENTER_CHOICES = (('1', "Vou com frequência"), ('2', '1 a 3 meses atrás'),
                                        ('3', '3 a 6 meses atrás'), ('4', 'Mais de 6 meses'), ('5', 'Mais de um ano'))
+
+    assisted_person = models.ForeignKey('Pessoa', on_delete=models.SET_NULL, blank=True, null=True,
+                                        related_name="atendimento_transpasse")
 
     how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True,
                                                  verbose_name="Como soube do Transpasse")
     psychology_intern = models.ForeignKey('Administracao.Usuario', verbose_name="Estagiária de psicologia responsável",
-                                          blank=True, null=True, on_delete=models.SET_NULL)
+                                          blank=True, null=True, on_delete=models.SET_NULL, limit_choices_to={
+            'Estagiario': True
+        })
     lives_with = models.CharField(max_length=100, blank=True, null=True, verbose_name="Com quem mora")
     cities_lived = models.CharField(max_length=100, blank=True, null=True, verbose_name="Cidades por onde passou")
-    ist_exams_up_to_date = models.BooleanField(default=False, verbose_name="Exames IST em dia")
+    ist_exams_up_to_date = models.BooleanField(default=False, blank=True, null=True, verbose_name="Exames IST em dia")
     last_time_been_health_center = models.CharField(max_length=100, blank=True, null=True,
                                                     choices=FREQUENCY_HEALTH_CENTER_CHOICES,
                                                     verbose_name="Última vez que foi ao posto de saúde")
@@ -241,13 +259,13 @@ class AtendimentoTranspasse(models.Model):
         verbose_name = "Ficha Transpasse"
         verbose_name_plural = "Fichas Transpasse"
 
+    def get_pessoas(self):
+        return self.assisted_person.full_name
+
 
 class AtendimentoDRS(models.Model):
     assisted_person = models.ForeignKey('Pessoa',  on_delete=models.SET_NULL, blank=True, null=True,
-                                        related_name="atendimento_drs")
-
-    axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
-
+                                        related_name="atendimento_drs", verbose_name="Pessoa assistida")
     how_knew_about_drs = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Como soube do DRS"))
     current_occupation = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Ocupação atual"))
     had_other_occupations = models.CharField(max_length=100, blank=True, null=True,
@@ -259,11 +277,14 @@ class AtendimentoDRS(models.Model):
     reference_entities = models.OneToOneField(Entidade, blank=True, null=True, verbose_name="Entidade de referência",
                                               on_delete=models.SET_NULL)
     follow_up_type = models.CharField(max_length=100, blank=True, null=True, verbose_name="Tipo de acompanhamento")
-    last_attendance_date = models.DateField(blank=True, null=True)
+    last_attendance_date = models.DateField(blank=True, null=True, verbose_name='Último atendimento/visita')
 
     class Meta:
         verbose_name = "Ficha DRS"
         verbose_name_plural = "Fichas DRS"
+
+    def get_pessoas(self):
+        return self.assisted_person.full_name
 
 
 class AcompanhamentoTranspasse(models.Model):

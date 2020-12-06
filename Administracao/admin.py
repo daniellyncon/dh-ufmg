@@ -2,12 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
-from django.contrib.auth.models import Group
 from .widgets import CustomDateInput
 from django.db import models
-
-
-admin.site.unregister(Group)
 
 
 class TarefaInline(admin.StackedInline):
@@ -24,6 +20,9 @@ class PlantaoInline(admin.StackedInline):
     extra = 1
     verbose_name = "Plantão"
     verbose_name_plural = 'Plantões'
+    min_num = 1
+    can_delete = True
+    show_change_link = True
     fields = (
         "day_of_the_week", "start_time", "end_time"
     )
@@ -35,6 +34,8 @@ class EnderecoInline(admin.StackedInline):
     fields = (
         'street', 'number', 'complement', 'neighborhood', 'city', 'state'
     )
+    verbose_name = 'Endereço'
+    verbose_name_plural = 'Endereços'
 
 
 class ProfileInline(admin.StackedInline):
@@ -49,10 +50,9 @@ class ProfileInline(admin.StackedInline):
 
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, EnderecoInline)
+    inlines = (ProfileInline, EnderecoInline, PlantaoInline)
     fieldsets = (
         (None, {'fields': ('email', 'last_login', 'date_joined')}),
-        # (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {
             'fields': ('is_active', 'groups', 'user_permissions'),
         }),
