@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -20,12 +22,11 @@ class Documento(models.Model):
              ('9', 'Outros'))
     type = models.CharField(max_length=1, choices=TYPES, default='1', verbose_name='Tipo de Documento')
     recipients = models.CharField(_("Destinatários"), blank=True, null=True, default=None, max_length=150)
-    date = models.DateField(_("Data"), auto_now=False, null=True, blank=True,
+    date = models.DateField(_("Data"), default=datetime.date.today(), null=False, blank=False,
                             help_text="produção/recebimento/envio/protocolo")
 
-    link = models.URLField(_("Link"), max_length=50, default=None, blank=True, null=True)
-    prepared_by = models.ManyToManyField('Usuario', verbose_name=_("Elaborado por"), blank=True,
-                                         related_name="developer")
+    link = models.URLField(_("Link"), max_length=200, default=None, blank=True, null=True)
+    prepared_by = models.ManyToManyField('Usuario', verbose_name=_("Elaborado por"), related_name="developer",)
 
     axis = models.ManyToManyField('Eixo', related_name="document_axis", blank=True,
                                   verbose_name="Eixos relacionados")
