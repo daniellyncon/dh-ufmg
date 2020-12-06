@@ -2,12 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
-from django.contrib.auth.models import Group
 from .widgets import CustomDateInput
 from django.db import models
-
-
-admin.site.unregister(Group)
 
 
 class TarefaInline(admin.StackedInline):

@@ -1,7 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin, Group
 from .managers import CustomUserManager
 from django.utils import timezone
 from datetime import date

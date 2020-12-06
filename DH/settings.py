@@ -53,7 +53,7 @@ MIDDLEWARE = [
     "django.contrib.admindocs.middleware.XViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware"
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 
@@ -183,7 +183,7 @@ JAZZMIN_SETTINGS = {
         {"model": "Tarefa"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {"app": "Atendimento"},
-        {"app": "books"},
+        {"app": "Administracao"},
     ],
     #############
     # User Menu #
@@ -277,6 +277,7 @@ JAZZMIN_SETTINGS = {
     # Add a language dropdown into the admin
     "language_chooser": False,
 }
+
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,
