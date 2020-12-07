@@ -1,7 +1,7 @@
-from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.db import models
 from Administracao.models import Eixo, Tarefa, Documento, Entidade
 
 
@@ -68,7 +68,7 @@ class Processo(models.Model):
                                             related_name="related_law_suit")
 
     def __str__(self):
-        return f'Número do processo {self.law_suit_number}'
+        return f"Número do processo {self.law_suit_number}"
 
     class Meta:
         verbose_name_plural = "Processos"
@@ -210,7 +210,7 @@ class Pessoa(models.Model):
     axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
 
     def __str__(self):
-        return self.full_name
+        return f"{self.full_name}"
 
     class Meta:
         verbose_name_plural = "Pessoas"
@@ -229,9 +229,8 @@ class AtendimentoTranspasse(models.Model):
     how_knew_about_transpasse = models.CharField(max_length=100, blank=True, null=True,
                                                  verbose_name="Como soube do Transpasse")
     psychology_intern = models.ForeignKey('Administracao.Usuario', verbose_name="Estagiária de psicologia responsável",
-                                          blank=True, null=True, on_delete=models.SET_NULL, limit_choices_to={
-            'Estagiario': True
-        })
+                                          blank=True, null=True, on_delete=models.SET_NULL,
+                                          limit_choices_to={'Estagiario': True})
     lives_with = models.CharField(max_length=100, blank=True, null=True, verbose_name="Com quem mora")
     cities_lived = models.CharField(max_length=100, blank=True, null=True, verbose_name="Cidades por onde passou")
     ist_exams_up_to_date = models.BooleanField(default=False, blank=True, null=True, verbose_name="Exames IST em dia")
@@ -263,7 +262,7 @@ class AtendimentoTranspasse(models.Model):
     was_processed = models.BooleanField(default=False, blank=True, null=True, verbose_name="Tem processo")
 
     def __str__(self):
-        return f'Ficha N°{self.id}'
+        return f"Ficha N°{self.id}"
 
     class Meta:
         verbose_name = "Ficha Transpasse"
@@ -274,7 +273,7 @@ class AtendimentoTranspasse(models.Model):
 
 
 class AtendimentoDRS(models.Model):
-    assisted_person = models.ForeignKey('Pessoa',  on_delete=models.SET_NULL, blank=True, null=True,
+    assisted_person = models.ForeignKey('Pessoa', on_delete=models.SET_NULL, blank=True, null=True,
                                         related_name="atendimento_drs", verbose_name="Pessoa assistida")
     how_knew_about_drs = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Como soube do DRS"))
     current_occupation = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Ocupação atual"))
@@ -307,6 +306,3 @@ class AcompanhamentoDRS(models.Model):
     comments = models.TextField(max_length=2000, default='', verbose_name="Observações",
                                 help_text="Tarefas/Acompanhamentos/Atendimentos")
     atendimento_drs = models.ForeignKey(AtendimentoDRS, on_delete=models.CASCADE)
-
-
-

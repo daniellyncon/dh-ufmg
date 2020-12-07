@@ -1,6 +1,6 @@
-import datetime
 from django.contrib import admin
 from Administracao.admin import EnderecoInline
+from .rules import is_same_axis, filter_by_axis, relation_processo_pessoa, relation_recurso_processo
 from .models import *
 
 
@@ -100,6 +100,33 @@ class CasoAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        if obj is None:
+            return True
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.is_superuser:
+            return queryset
+        return filter_by_axis(request.user, queryset)
+
 
 @admin.register(Processo)
 class ProcessoAdmin(admin.ModelAdmin):
@@ -137,6 +164,33 @@ class ProcessoAdmin(admin.ModelAdmin):
     Processo.get_recursos.short_description = 'Recursos relacionados'
     Processo.get_pessoas.short_description = 'Pessoas relacionadas'
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        if obj is None:
+            return True
+        return request.user.is_superuser or obj in relation_processo_pessoa(request.user, Processo.objects.all())
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or obj in relation_processo_pessoa(request.user, Processo.objects.all())
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or obj in relation_processo_pessoa(request.user, Processo.objects.all())
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.is_superuser:
+            return queryset
+        return relation_processo_pessoa(request.user, queryset)
+
 
 @admin.register(Recurso)
 class RecursoAdmin(admin.ModelAdmin):
@@ -160,6 +214,33 @@ class RecursoAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        if obj is None:
+            return True
+        return request.user.is_superuser or obj in relation_recurso_processo(request.user, Recurso.objects.all())
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or obj in relation_recurso_processo(request.user, Recurso.objects.all())
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or obj in relation_recurso_processo(request.user, Recurso.objects.all())
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.is_superuser:
+            return queryset
+        return relation_recurso_processo(request.user, queryset)
+
 
 class PessoaInline(admin.StackedInline):
     model = Pessoa
@@ -182,6 +263,7 @@ class PessoaAdmin(admin.ModelAdmin):
         ("Saúde", {"fields": ("has_health_problem", "which_health_problem", "receives_assistance", "which_assistance",
                               )}),
         ("Contato", {"fields": ("related_person", "related_person_bond", "contact_email", "contact_phone",
+
                                 'reference_regional_administration', "street", "number", "complement", "neighborhood",
                                 "city", "state")}),
     )
@@ -208,7 +290,7 @@ class PessoaAdmin(admin.ModelAdmin):
 
     def get_age(self, obj):
         if obj.birthday:
-            today = datetime.date.today()
+            today = date.today()
             return today.year - obj.birthday.year - (
                     (today.month, today.day) < (obj.birthday.month, obj.birthday.day)
             )
@@ -216,6 +298,33 @@ class PessoaAdmin(admin.ModelAdmin):
             return ''
 
     get_age.short_description = 'Idade'
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        if obj is None:
+            return True
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or is_same_axis(request.user, obj)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if request.user.is_superuser:
+            return queryset
+        return filter_by_axis(request.user, queryset)
 
 
 @admin.register(AtendimentoDRS)

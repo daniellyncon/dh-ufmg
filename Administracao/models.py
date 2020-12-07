@@ -1,18 +1,18 @@
-import datetime
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import PermissionsMixin, Group
-from .managers import CustomUserManager
-from django.utils import timezone
 from datetime import date
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
+from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from django.db import models
+
+from .managers import CustomUserManager
 
 
 class Eixo(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Nome"))
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Documento(models.Model):
@@ -21,7 +21,7 @@ class Documento(models.Model):
              ('9', 'Outros'))
     type = models.CharField(max_length=1, choices=TYPES, default='1', verbose_name='Tipo de Documento')
     recipients = models.CharField(_("Destinatários"), blank=True, null=True, default=None, max_length=150)
-    date = models.DateField(_("Data"), default=datetime.date.today(), null=False, blank=False,
+    date = models.DateField(_("Data"), default=date.today(), null=False, blank=False,
                             help_text="produção/recebimento/envio/protocolo")
 
     link = models.URLField(_("Link"), max_length=200, default=None, blank=True, null=True)
@@ -86,7 +86,7 @@ class Entidade(models.Model):
     state = models.CharField(max_length=2, verbose_name=_("UF"), default='')
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     def eixos(self):
         return ", ".join([str(p) for p in self.axis.all()])
@@ -104,7 +104,7 @@ class Endereco(models.Model):
     user = models.OneToOneField('Usuario', blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Rua {self.street} n°{self.number}'
+        return f"Rua {self.street} n°{self.number}"
 
 
 class Plantao(models.Model):
@@ -116,7 +116,7 @@ class Plantao(models.Model):
     user = models.ForeignKey('Usuario', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.get_day_of_the_week_display()} {self.start_time} {self.end_time}'
+        return f"{self.get_day_of_the_week_display()} {self.start_time} {self.end_time}"
 
 
 class Perfil(models.Model):
@@ -146,7 +146,7 @@ class Perfil(models.Model):
         verbose_name_plural = "Perfis"
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     def get_axis(self):
         return ", ".join([str(p) for p in self.axis.all()])
@@ -168,7 +168,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         try:
             return self.perfil.name
         except Perfil.DoesNotExist:
-            return f'Usuário n°{self.id}'
+            return f"Usuário n°{self.id}"
 
     class Meta:
         verbose_name_plural = "Usuários"
