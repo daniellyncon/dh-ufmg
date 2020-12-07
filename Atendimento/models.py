@@ -1,8 +1,8 @@
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from Administracao.models import Eixo, Tarefa, Documento, Endereco, Entidade
-from datetime import date
+from Administracao.models import Eixo, Tarefa, Documento, Entidade
 
 
 class Caso(models.Model):
@@ -11,13 +11,13 @@ class Caso(models.Model):
              ('9', 'Sucessões'), ('10', 'Societário'), ('11', 'Trabalhista'), ('12', 'Tributário'),
              ('13', 'Contratos'), ('14', 'Internacional'))
 
-    related_areas = models.CharField(_('Áreas relacionadas'), max_length=3, choices=AREAS, blank=True, null=True,)
+    related_areas = models.CharField(_('Áreas relacionadas'), max_length=3, choices=AREAS, default=1)
     reference_contacts = models.CharField(_("Contatos de referência"), blank=True, null=True, default=None,
                                           max_length=200)
     daj_number = models.CharField(_("Número do caso no MinhaDAJ"), blank=True, null=True, default=None, max_length=50)
     daj_advisor = models.CharField(_("Orientador no DAJ"), blank=True, null=True, default=None, max_length=50)
     daj_intern = models.CharField(_("Estagiário no DAJ"), blank=True, null=True, default=None, max_length=50)
-    report = models.TextField(_("Relatório"), blank=True, null=True, default=None, max_length=15000)
+    report = models.TextField(_("Relatório"), default='', max_length=15000)
     registration_date = models.DateField(_("Data de cadastro"), auto_now=False)
     solution_date = models.DateField(_("Data de solução"), auto_now=False, blank=True, null=True)
 
@@ -46,24 +46,24 @@ class Processo(models.Model):
                      ('11', 'Tributário'), ('12', 'Contratos'), ('13', 'Internacional'),
                      ('14', 'Retificação'))
     law_suit_number = models.CharField(verbose_name=_("Número do processo"), max_length=50, default=None)
-    action_type = models.CharField(verbose_name=_("Tipo de ação"), max_length=200, default=None, blank=True, null=True)
+    action_type = models.CharField(verbose_name=_("Tipo de ação"), max_length=200, default='')
     open_mandate = models.BooleanField(verbose_name=_("Mandado de prisão em aberto?"), default=None)
-    district = models.CharField(verbose_name=_("Comarca"), max_length=200, default=None, blank=True, null=True)
-    law_area = models.CharField(verbose_name="Área do direito", choices=AREAS_CHOICES, max_length=50, blank=True,
-                                null=True)
+    district = models.CharField(verbose_name=_("Comarca"), max_length=200, default='')
+    law_area = models.CharField(verbose_name="Área do direito", choices=AREAS_CHOICES, max_length=3, default=1)
     latest_moves = models.CharField(verbose_name=_("Últimas movimentações"), max_length=500, default=None, blank=True,
                                     null=True)
-    has_lawyer = models.BooleanField(verbose_name=_("Possui advogado/defensor constituído nos autos?"), default=None)
+    has_lawyer = models.BooleanField(verbose_name=_("Possui advogado/defensor constituído nos autos?"), default=False)
     lawyer_name = models.CharField(verbose_name=_("Nome advogado/defensor"), max_length=200, default=None, null=True,
                                    blank=True)
     lawyer_contact = models.CharField(verbose_name=_("Contato advogado/defenso"), max_length=200, default=None,
                                       null=True, blank=True)
-    followed_by_daj = models.BooleanField(verbose_name=_("Acompanhado pela DAJ"), default=None)
+    followed_by_daj = models.BooleanField(verbose_name=_("Acompanhado pela DAJ"), default=False)
     minhadaj_number = models.CharField(verbose_name=_("Número MinhaDAJ"), max_length=50, default=None, null=True,
                                        blank=True)
-    start_date = models.DateField(verbose_name=_("Data início [PI/recebimento da denúncia]"), auto_now=False,
-                                  default=None, blank=True, null=True)
-    transit_date = models.DateField(verbose_name=_("Data trânsito em julgado"), auto_now=False, default=None)
+    start_date = models.DateField(verbose_name=_("Data início [PI/recebimento da denúncia]"),
+                                  auto_now=False, default=None)
+    transit_date = models.DateField(verbose_name=_("Data trânsito em julgado"), auto_now=False,
+                                    default=None, blank=True, null=True)
     related_people = models.ManyToManyField('Pessoa', verbose_name='Pessoas envolvidas',
                                             related_name="related_law_suit")
 
@@ -94,8 +94,11 @@ class Recurso(models.Model):
     plenary = models.CharField(_("Câmara/Turma/Plenário"), max_length=200, default=None, blank=True, null=True)
     report = models.CharField(_("Relatoria"), max_length=200, default=None, blank=True, null=True)
     resume = models.TextField(_("Resumo"), max_length=5000, default=None, blank=True, null=True)
-    law_suit = models.ForeignKey(Processo, on_delete=models.CASCADE, related_name='judicial_appeals', blank=True,
-                                 null=True)
+    law_suit = models.ForeignKey(Processo, on_delete=models.CASCADE, related_name='judicial_appeals',
+                                 verbose_name="Processo")
+
+    transit_date = models.DateField(verbose_name=_("Data trânsito em julgado"), auto_now=False,
+                                    default=None, blank=True, null=True)
 
     class Meta:
         verbose_name = "Recurso"
@@ -130,18 +133,18 @@ class Pessoa(models.Model):
 
     LAW_SUIT_CHOICES = (('1', 'Parte autora'), ('2', 'Parte ré'), ('3', 'Terceiro'), ('4', 'interessado'))
 
-    assisted = models.BooleanField(verbose_name="Pessoa assistida?", blank=True, null=True)
-    responsible_advisor = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="p_advisor",
+    assisted = models.BooleanField(verbose_name="Pessoa assistida?", default=False)
+    responsible_advisor = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="p_advisor",
                                                  verbose_name="Orientadora responsável")
-    responsible_intern = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="p_intern",
+    responsible_intern = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="p_intern",
                                                 verbose_name="Estagiária responsável")
-    first_appointment_date = models.DateField(blank=True, null=True, verbose_name="Data do primeiro atendimento")
+    first_appointment_date = models.DateField(default=timezone.now(), verbose_name="Data do primeiro atendimento")
     full_name = models.CharField(verbose_name="Nome completo", max_length=100, default="")
     mother_name = models.CharField(verbose_name="Nome da mãe", max_length=100, default="")
 
     civil_registry = models.CharField(verbose_name="Registro civil", max_length=100, blank=True, null=True)
-    civil_status = models.CharField(verbose_name="Estado civíl", choices=CIVIL_STATUS_CHOICES, max_length=50,
-                                    blank=True, null=True)
+    civil_status = models.CharField(verbose_name="Estado civíl", choices=CIVIL_STATUS_CHOICES, max_length=3,
+                                    default=1)
     schooling = models.CharField(verbose_name="Escolaridade", choices=SCHOOLING_CHOICES, max_length=50, blank=True,
                                  null=True)
 
@@ -166,8 +169,8 @@ class Pessoa(models.Model):
 
     # nascimento
     birthday = models.DateField(verbose_name="Data de nascimento")
-    birth_city = models.CharField(verbose_name="Cidade de nascimento", max_length=50, blank=True, null=True)
-    birth_state = models.CharField(verbose_name="Estado de nascimento", max_length=50, blank=True, null=True)
+    birth_city = models.CharField(verbose_name="Cidade de nascimento", max_length=50, default='')
+    birth_state = models.CharField(verbose_name="Estado de nascimento", max_length=50, default='')
 
     # saúde
     has_health_problem = models.BooleanField(verbose_name="Tem algum problema de saúde?", default=None, blank=True,
@@ -185,6 +188,14 @@ class Pessoa(models.Model):
     contact_phone = models.CharField(verbose_name=_("Telefone contato"), max_length=20, blank=True, null=True)
     contact_address = models.ForeignKey('Administracao.Endereco', blank=True, null=True, on_delete=models.SET_NULL,
                                         related_name='contact')
+
+    street = models.CharField(max_length=200, null=True, blank=True, verbose_name=_("Rua"))
+    number = models.IntegerField(null=True, blank=True, verbose_name=_("Número"))
+    complement = models.CharField(max_length=200, null=True, blank=True, verbose_name=_("Complemento"))
+    neighborhood = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("Bairro"))
+    city = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Cidade"))
+    state = models.CharField(max_length=2, verbose_name=_("UF"), null=True, blank=True)
+
     # caso
     related_case_bond = models.CharField(verbose_name=_("Vínculo caso"), max_length=30, blank=True, null=True,
                                          choices=CASE_BOND_CHOICES)

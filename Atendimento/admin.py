@@ -77,10 +77,9 @@ class RecursoHistoricoInline(admin.StackedInline):
 class CasoAdmin(admin.ModelAdmin):
     list_display = ('id', 'related_areas', 'daj_number')
     fieldsets = (
-        ("Dados do caso", {"fields": ('related_areas', 'daj_number', 'daj_advisor', 'daj_intern',
-                                      'registration_date', 'solution_date',
-                                      'advisor', 'intern', 'assisted_person',
-                                      'law_suits', 'entities', 'axis', 'tasks', 'documents')}),
+        ("Dados do caso", {"fields": ('related_areas', 'reference_contacts', 'daj_number', 'daj_advisor', 'daj_intern',
+                                      'registration_date', 'solution_date', 'advisor', 'intern', 'assisted_person',
+                                      'report',  'law_suits', 'entities', 'axis', 'tasks', 'documents')}),
     )
     list_display_links = ()
     # list_filter = ("author", "genre")
@@ -143,7 +142,8 @@ class ProcessoAdmin(admin.ModelAdmin):
 class RecursoAdmin(admin.ModelAdmin):
     list_display = ('type', 'judicial_appeal_number')
     fieldsets = (
-        ("Dados do recurso", {"fields": ('law_suit', 'type', 'judicial_appeal_number', 'plenary', 'report', 'resume')}),
+        ("Dados do recurso", {"fields": ('law_suit', 'type', 'judicial_appeal_number', 'plenary', 'report', 'resume',
+                                         'transit_date')}),
     )
     list_display_links = ()
     list_select_related = True
@@ -174,14 +174,16 @@ class PessoaInline(admin.StackedInline):
 class PessoaAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', 'get_related_cases')
     fieldsets = (
-        ("Dados Pessoais", {"fields": ('first_appointment_date', 'full_name', 'civil_registry', 'rg', 'cpf', 'get_age',
-                                       'birth_city', 'birth_state', 'phone', 'birthday', 'mother_name', 'civil_status',
-                                       'gender_identity', 'preferred_pronouns', 'self_identification', 'schooling')}),
+        ("Dados Pessoais", {"fields": ('assisted', 'responsible_advisor', 'responsible_intern',
+                                       'first_appointment_date', 'full_name', 'civil_registry', 'rg', 'cpf', 'cnh',
+                                       'get_age', 'birth_city', 'birth_state', 'phone', 'birthday', 'mother_name',
+                                       'civil_status', 'gender_identity', 'preferred_pronouns', 'self_identification',
+                                       'schooling', "axis")}),
         ("Saúde", {"fields": ("has_health_problem", "which_health_problem", "receives_assistance", "which_assistance",
                               )}),
         ("Contato", {"fields": ("related_person", "related_person_bond", "contact_email", "contact_phone",
-                                )}),
-
+                                'reference_regional_administration', "street", "number", "complement", "neighborhood",
+                                "city", "state")}),
     )
     # raw_id_fields = ("author",)
     readonly_fields = ("get_age",)

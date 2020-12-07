@@ -1,5 +1,4 @@
 import datetime
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -40,9 +39,9 @@ class Documento(models.Model):
 
 class Tarefa(models.Model):
     title = models.CharField(_("Título"), max_length=50)
-    deadline = models.DateField(_("Prazo"), auto_now=False, auto_now_add=False, default=None, blank=True, null=True)
-    description = models.TextField(_("Descrição"), max_length=500, blank=True, null=True)
-    responsible = models.ManyToManyField('Usuario', related_name="in_charge", blank=True, verbose_name="Responsável")
+    deadline = models.DateField(_("Prazo"), default=timezone.now())
+    description = models.TextField(_("Descrição"), max_length=500, default='')
+    responsible = models.ManyToManyField('Usuario', related_name="in_charge", verbose_name="Responsável")
     is_done = models.BooleanField(_("Feito"), default=False)
 
     @property
@@ -85,8 +84,6 @@ class Entidade(models.Model):
     neighborhood = models.CharField(max_length=50, null=False, blank=False, verbose_name=_("Bairro"), default='')
     city = models.CharField(max_length=100, null=False, blank=False, verbose_name=_("Cidade"), default='')
     state = models.CharField(max_length=2, verbose_name=_("UF"), default='')
-
-
 
     def __str__(self):
         return self.name

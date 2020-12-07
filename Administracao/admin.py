@@ -1,8 +1,9 @@
-from django import forms
 from django.contrib import admin
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.admin import UserAdmin
 from .models import *
+from django.contrib.auth.models import Group
+
+admin.site.unregister(Group)
 
 
 class TarefaDocumentoInline(admin.StackedInline):
@@ -55,9 +56,6 @@ class CustomUserAdmin(UserAdmin):
     inlines = (ProfileInline, EnderecoInline, PlantaoInline)
     fieldsets = (
         (None, {'fields': ('email', 'last_login', 'date_joined', 'is_active')}),
-        # (_('Permissions'), {
-        #     'fields': ('is_active', 'groups', 'user_permissions'),
-        # }),
     )
     add_fieldsets = (
         (None, {
@@ -67,7 +65,6 @@ class CustomUserAdmin(UserAdmin):
     )
     readonly_fields = ('last_login',)
     list_display = ('get_name', 'get_bond_type', 'email', 'get_phone', 'get_axis')
-    # list_display_links = ('get_axis',)
     list_filter = ('is_superuser', 'is_active', 'perfil__axis')
     search_fields = ("get_name", 'email',)
     ordering = ()
@@ -101,7 +98,6 @@ class TarefaAdmin(admin.ModelAdmin):
     list_filter = ("deadline", "responsible", "is_done")
     autocomplete_fields = ()
     search_fields = ("title",)
-    # inlines = [TarefaDocumentoInline, ]
     readonly_fields = ("id",)
     fieldsets = (
         (None, {"fields": ("title", "deadline", "description", "responsible", "is_done")}),
@@ -131,7 +127,6 @@ class EntidadeAdmin(admin.ModelAdmin):
     list_filter = ("axis",)
     autocomplete_fields = ()
     search_fields = ("name", "reference_person")
-    readonly_fields = ("id",)
     fieldsets = (
         ("Dados da entidade", {"fields": ("name", "entity_liked", "description", "contact", "comments",
                                           "person", 'axis')}),
@@ -150,37 +145,3 @@ class DocumentoAdmin(admin.ModelAdmin):
 @admin.register(Frase)
 class FraseAdmin(admin.ModelAdmin):
     list_display = ("id", "content", "source")
-
-
-# class TaskAdminForm(forms.ModelForm):
-#     fields = ["title", "deadline", "description", "responsible", "is_done"]
-#     exclude = ()
-#     documents = forms.ModelMultipleChoiceField(
-#         queryset=Documento.objects.all(),
-#         required=False,
-#         widget=FilteredSelectMultiple(
-#             verbose_name='Documentos relacionados',
-#             is_stacked=False
-#         )
-#     )
-#
-#     class Meta:
-#         model = Tarefa
-#
-#     def __init__(self, *args, **kwargs):
-#         super(TaskAdminForm, self).__init__(*args, **kwargs)
-#
-#         if self.instance and self.instance.pk:
-#             self.fields['documents'].initial = self.instance.pizzas.all()
-#
-#     def save(self, commit=True):
-#         task = super(TaskAdminForm, self).save(commit=False)
-#
-#         if commit:
-#             task.save()
-#
-#         if task.pk:
-#             task.documents = self.cleaned_data['documents']
-#             self.save_m2m()
-#
-#         return task
