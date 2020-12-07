@@ -23,7 +23,7 @@ class TarefaInline(admin.StackedInline):
 
 class PlantaoInline(admin.StackedInline):
     model = Plantao
-    extra = 7
+    extra = 4
     verbose_name = "Plantão"
     verbose_name_plural = 'Plantões'
     min_num = 1
@@ -32,6 +32,23 @@ class PlantaoInline(admin.StackedInline):
     fields = (
         "day_of_the_week", "start_time", "end_time"
     )
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return request.user.is_superuser or request.user.id == obj.id
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or request.user.id == obj.id
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser or request.user.id == obj.id
 
 
 class EnderecoInline(admin.StackedInline):
