@@ -1,8 +1,10 @@
-from django.db import models
+from datetime import date
+
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.db import models
+
 from Administracao.models import Eixo, Tarefa, Documento, Endereco, Entidade
-from datetime import date
 
 
 class Caso(models.Model):
@@ -68,7 +70,7 @@ class Processo(models.Model):
                                             related_name="related_law_suit")
 
     def __str__(self):
-        return f'Número do processo {self.law_suit_number}'
+        return f"Número do processo {self.law_suit_number}"
 
     class Meta:
         verbose_name_plural = "Processos"
@@ -200,7 +202,7 @@ class Pessoa(models.Model):
     axis = models.ManyToManyField('Administracao.Eixo', verbose_name=_("Eixos relacionados"))
 
     def __str__(self):
-        return self.full_name
+        return f"{self.full_name}"
 
     class Meta:
         verbose_name_plural = "Pessoas"
@@ -253,7 +255,7 @@ class AtendimentoTranspasse(models.Model):
     was_processed = models.BooleanField(default=False, blank=True, null=True, verbose_name="Tem processo")
 
     def __str__(self):
-        return f'Ficha N°{self.id}'
+        return f"Ficha N°{self.id}"
 
     class Meta:
         verbose_name = "Ficha Transpasse"

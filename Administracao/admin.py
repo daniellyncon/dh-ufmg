@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
+from django.db import models
+
 from .models import Eixo, Tarefa, Documento, Entidade, Endereco, Plantao, Perfil, Usuario, Frase
 from .widgets import CustomDateInput
-from django.db import models
 
 
 class TarefaInline(admin.StackedInline):
@@ -92,6 +93,23 @@ class CustomUserAdmin(UserAdmin):
             return list()
         return super().get_inline_instances(request, obj)
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return False
+        return request.user.is_superuser or request.user.id == obj.id
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
 
 @admin.register(Tarefa)
 class TarefaAdmin(admin.ModelAdmin):
@@ -112,6 +130,21 @@ class TarefaAdmin(admin.ModelAdmin):
 
     get_responsibles.short_description = "Reponsáveis"
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 @admin.register(Eixo)
 class EixoAdmin(admin.ModelAdmin):
@@ -123,6 +156,21 @@ class EixoAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("name", )}),
     )
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
 
 
 @admin.register(Entidade)
@@ -141,6 +189,21 @@ class EntidadeAdmin(admin.ModelAdmin):
         models.DateField: {'widget': CustomDateInput},
     }
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 @admin.register(Documento)
 class DocumentoAdmin(admin.ModelAdmin):
@@ -149,7 +212,37 @@ class DocumentoAdmin(admin.ModelAdmin):
         models.DateField: {'widget': CustomDateInput(format='%dd/%mm/%YYYY')},
     }
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 @admin.register(Frase)
 class FraseAdmin(admin.ModelAdmin):
     list_display = ("id", "content", "source")
+
+    def has_module_permission(self, request):
+        return request.user.is_superuser
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
