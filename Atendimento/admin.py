@@ -1,15 +1,17 @@
+from datetime import date
+
 from django.contrib import admin
 from django.db import models
 
 from Administracao.admin import EnderecoInline
 from Administracao.widgets import CustomDateInput
+from Administracao.admin import EnderecoInline
 
-from .models import *
 from .rules import is_same_axis, filter_by_axis, relation_processo_pessoa, relation_recurso_processo
+from .models import *
 
 class RecursoInline(admin.StackedInline):
     model = Recurso
-    # readonly_fields = ("pk", )
     fields = (
         'type', 'judicial_appeal_number', 'plenary', 'report', 'resume'
     )
@@ -58,8 +60,8 @@ class AtendimentoTranspasseInline(admin.StackedInline):
 class AtendimentoDRSInline(admin.StackedInline):
     model = AtendimentoDRS
     fields = ('assisted_person', 'how_knew_about_drs', 'current_occupation',
-                                        'had_other_occupations', 'relevant_information', 'reference_entities',
-                                        'follow_up_type', 'last_attendance_date',)
+              'had_other_occupations', 'relevant_information', 'reference_entities',
+              'follow_up_type', 'last_attendance_date',)
     extra = 1
     verbose_name = 'Ficha DRS'
     verbose_name_plural = 'Fichas DRS'
@@ -161,9 +163,9 @@ class ProcessoAdmin(admin.ModelAdmin):
     actions_on_bottom = False
     actions_selection_counter = True
 
-    formfield_overrides = {
-        models.DateField: {'widget': CustomDateInput},
-    }
+    # formfield_overrides = {
+    #     models.DateField: {'widget': CustomDateInput},
+    # }
 
     Processo.get_law_area.short_description = 'Área do direito'
     Processo.get_recursos.short_description = 'Recursos relacionados'
@@ -204,7 +206,6 @@ class RecursoAdmin(admin.ModelAdmin):
         ("Dados do recurso", {"fields": ('law_suit', 'type', 'judicial_appeal_number', 'plenary', 'report', 'resume')}),
     )
     list_display_links = ()
-    # list_filter = ("author", "genre")
     list_select_related = True
     list_per_page = 20
     list_max_show_all = 100
@@ -289,10 +290,6 @@ class PessoaAdmin(admin.ModelAdmin):
     actions_on_top = True
     actions_on_bottom = False
     actions_selection_counter = True
-
-    formfield_overrides = {
-        models.DateField: {'widget': CustomDateInput},
-    }
 
     def get_age(self, obj):
         if obj.birthday:
