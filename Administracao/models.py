@@ -180,7 +180,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
 class Frase(models.Model):
     content = models.CharField(_("Conteúdo"), max_length=500)
-    source = models.CharField(_("Fonte"), max_length=50, default=None, blank=True, null=True)
+    source = models.CharField(_("Fonte"), max_length=100, default=None, blank=True, null=True)
 
     def __str__(self):
         return f"Frase n°{self.id}"
