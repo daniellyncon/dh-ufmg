@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib import admin
 from Administracao.admin import EnderecoInline
 from .rules import is_same_axis, filter_by_axis, relation_processo_pessoa, relation_recurso_processo
