@@ -113,12 +113,12 @@ class CasoAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or is_same_axis(request.user, obj)
 
     def has_delete_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or is_same_axis(request.user, obj)
 
     def get_queryset(self, request):
@@ -177,12 +177,12 @@ class ProcessoAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or obj in relation_processo_pessoa(request.user, Processo.objects.all())
 
     def has_delete_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or obj in relation_processo_pessoa(request.user, Processo.objects.all())
 
     def get_queryset(self, request):
@@ -227,12 +227,12 @@ class RecursoAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or obj in relation_recurso_processo(request.user, Recurso.objects.all())
 
     def has_delete_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or obj in relation_recurso_processo(request.user, Recurso.objects.all())
 
     def get_queryset(self, request):
@@ -312,12 +312,12 @@ class PessoaAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or is_same_axis(request.user, obj)
 
     def has_delete_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or is_same_axis(request.user, obj)
 
     def get_queryset(self, request):

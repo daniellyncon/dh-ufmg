@@ -102,7 +102,7 @@ class CustomUserAdmin(UserAdmin):
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
-            return False
+            return True
         return request.user.is_superuser or request.user.id == obj.id
 
     def has_delete_permission(self, request, obj=None):
