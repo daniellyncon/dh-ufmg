@@ -23,7 +23,7 @@ class TarefaInline(admin.StackedInline):
 
 class PlantaoInline(admin.StackedInline):
     model = Plantao
-    extra = 1
+    extra = 7
     verbose_name = "Plantão"
     verbose_name_plural = 'Plantões'
     min_num = 1
@@ -44,42 +44,38 @@ class EnderecoInline(admin.StackedInline):
     verbose_name_plural = 'Endereço'
 
 
-class ProfileInline(admin.StackedInline):
-    model = Perfil
-    can_delete = False
-    verbose_name_plural = 'Perfil'
-    fk_name = 'user'
-
-
 @admin.register(Usuario)
 class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, EnderecoInline, PlantaoInline)
+    inlines = (EnderecoInline, PlantaoInline)
     fieldsets = (
-        (None, {'fields': ('email', 'last_login', 'date_joined', 'is_active')}),
+        ('Geral', {'fields': ('email', 'last_login', 'date_joined', 'is_active')}),
+        ('Perfil', {'fields': ('name', 'rg', 'cpf', 'cnh', 'axis', 'bond_type', 'phone', 'registration',  'course',
+                               'university', 'department', 'date_fired', 'scholarship',  'scholarship_type')})
     )
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
+            'fields': ('name', 'email', 'password1', 'password2'),
         }),
     )
     readonly_fields = ('last_login',)
     list_display = ('get_name', 'get_bond_type', 'email', 'get_phone', 'get_axis')
-    list_filter = ('is_superuser', 'is_active', 'perfil__axis')
+    list_filter = ('is_superuser', 'is_active', 'axis')
     search_fields = ("get_name", 'email',)
     ordering = ()
     filter_horizontal = ('groups', 'user_permissions',)
 
     def get_name(self, obj):
-        return obj.perfil.name
+        return obj.name
 
     def get_bond_type(self, obj):
-        return obj.perfil.get_bond_type_display()
+        return obj.get_bond_type_display()
 
     def get_axis(self, obj):
-        return obj.perfil.get_axis()
+        return obj.get_axis()
 
-    get_name.admin_order_field = 'perfil'  # Allows column order sorting
+    get_name.admin_order_field = 'name'  # Allows column order sorting
     get_name.short_description = 'Nome'  # Renames column head
     get_bond_type.short_description = 'Tipo de vínculo'
     get_bond_type.admin_order_field = 'bond_type'
@@ -121,7 +117,7 @@ class TarefaAdmin(admin.ModelAdmin):
     )
 
     def get_responsibles(self, obj):
-        return ", ".join([e.perfil.name for e in obj.responsible.all()])
+        return ", ".join([e.name for e in obj.responsible.all()])
 
     get_responsibles.short_description = "Reponsáveis"
 

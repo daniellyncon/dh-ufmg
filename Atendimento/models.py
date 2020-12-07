@@ -1,3 +1,4 @@
+import django
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -138,7 +139,8 @@ class Pessoa(models.Model):
                                                  verbose_name="Orientadora responsável")
     responsible_intern = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="p_intern",
                                                 verbose_name="Estagiária responsável")
-    first_appointment_date = models.DateField(default=timezone.now(), verbose_name="Data do primeiro atendimento")
+    first_appointment_date = models.DateField(default=django.utils.timezone.now,
+                                              verbose_name="Data do primeiro atendimento")
     full_name = models.CharField(verbose_name="Nome completo", max_length=100, default="")
     mother_name = models.CharField(verbose_name="Nome da mãe", max_length=100, default="")
 

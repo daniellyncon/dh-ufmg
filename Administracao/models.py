@@ -1,4 +1,6 @@
 from datetime import date
+
+import django
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
@@ -21,7 +23,7 @@ class Documento(models.Model):
              ('9', 'Outros'))
     type = models.CharField(max_length=1, choices=TYPES, default='1', verbose_name='Tipo de Documento')
     recipients = models.CharField(_("Destinatários"), blank=True, null=True, default=None, max_length=150)
-    date = models.DateField(_("Data"), default=date.today(), null=False, blank=False,
+    date = models.DateField(_("Data"), default=django.utils.timezone.now, null=False, blank=False,
                             help_text="produção/recebimento/envio/protocolo")
 
     link = models.URLField(_("Link"), max_length=200, default=None, blank=True, null=True)
@@ -39,7 +41,7 @@ class Documento(models.Model):
 
 class Tarefa(models.Model):
     title = models.CharField(_("Título"), max_length=50)
-    deadline = models.DateField(_("Prazo"), default=timezone.now())
+    deadline = models.DateField(_("Prazo"), default=django.utils.timezone.now)
     description = models.TextField(_("Descrição"), max_length=500, default='')
     responsible = models.ManyToManyField('Usuario', related_name="in_charge", verbose_name="Responsável")
     is_done = models.BooleanField(_("Feito"), default=False)
@@ -119,12 +121,17 @@ class Plantao(models.Model):
         return f"{self.get_day_of_the_week_display()} {self.start_time} {self.end_time}"
 
 
-class Perfil(models.Model):
-    user = models.OneToOneField('Usuario', on_delete=models.CASCADE, verbose_name=_("Usuário"))
+class Usuario(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('Endereço de e-mail'), unique=True)
+    is_staff = models.BooleanField(_("É da equipe"), default=True)
+    is_active = models.BooleanField(_("Está ativo"), default=True)
+    date_joined = models.DateField(_("Data de Entrada"), default=timezone.now)
+    last_login = models.DateTimeField(_('Último login'), blank=True, null=True)
+
     SCHOLARSHIP_CHOICES = (('1', 'Bolsista'), ('2', 'Voluntário'))
     BOND_TYPE_CHOICES = (('1', 'Coordenador'), ('2', 'Orientador'), ('3', 'Estagiário'), ('4', 'Colaborador Eventual'))
 
-    name = models.CharField(_("Nome"), max_length=100, blank=True, null=True)
+    name = models.CharField(_("Nome"), max_length=100)
     rg = models.CharField(_("RG"), max_length=20, blank=True, null=True)
     cpf = models.CharField(_("CPF"), max_length=50, blank=True, null=True)
     cnh = models.CharField(_("CNH"), max_length=50, blank=True, null=True)
@@ -141,41 +148,23 @@ class Perfil(models.Model):
     scholarship = models.CharField(_("Bolsista"), max_length=50, blank=True, null=True, choices=SCHOLARSHIP_CHOICES)
     scholarship_type = models.CharField(_("Tipo de bolsa"), max_length=50, blank=True, null=True)
 
-    class Meta:
-        verbose_name = "Perfil"
-        verbose_name_plural = "Perfis"
-
-    def __str__(self):
-        return f"{self.name}"
-
-    def get_axis(self):
-        return ", ".join([str(p) for p in self.axis.all()])
-
-
-class Usuario(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('Endereço de e-mail'), unique=True)
-    is_staff = models.BooleanField(_("É da equipe"), default=True)
-    is_active = models.BooleanField(_("Está ativo"), default=True)
-    date_joined = models.DateField(_("Data de Entrada"), default=timezone.now)
-    last_login = models.DateTimeField(_('Último login'), blank=True, null=True)
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
 
     def __str__(self):
-        try:
-            return self.perfil.name
-        except Perfil.DoesNotExist:
-            return f"Usuário n°{self.id}"
+        return self.name or '-'
 
     class Meta:
         verbose_name_plural = "Usuários"
-        ordering = ['perfil']
+        ordering = ['name']
 
     def get_phone(self):
-        return self.perfil.phone or None
+        return self.phone or None
+
+    def get_axis(self):
+        return ", ".join([str(p) for p in self.axis.all()])
 
 
 class Frase(models.Model):

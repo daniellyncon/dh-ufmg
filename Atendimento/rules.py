@@ -1,12 +1,12 @@
 from .models import Pessoa, Processo
 
 def is_same_axis(user, obj):
-    user_axis = user.perfil.axis.all()
+    user_axis = user.axis.all()
     obj_axis = obj.axis.all()
     return any(axis in user_axis for axis in obj_axis)
 
 def filter_by_axis(user, queryset):
-    user_axis = user.perfil.axis.all()
+    user_axis = user.axis.all()
     return queryset.filter(axis__in=user_axis)
 
 def relation_processo_pessoa(user, queryset):
