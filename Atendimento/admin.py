@@ -378,12 +378,6 @@ class DrsAdmin(admin.ModelAdmin):
             return True
         return request.user.is_superuser or is_drs(request.user)
 
-    # def get_queryset(self, request):
-    #     queryset = super().get_queryset(request)
-    #     if request.user.is_superuser:
-    #         return queryset
-    #     return filter_by_axis(request.user, queryset)
-
 
 @admin.register(AtendimentoTranspasse)
 class TranpasseAdmin(admin.ModelAdmin):
@@ -435,9 +429,3 @@ class TranpasseAdmin(admin.ModelAdmin):
         if obj is None:
             return True
         return request.user.is_superuser or is_transpasse(request.user)
-
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        if request.user.is_superuser:
-            return queryset
-        return filter_by_axis(request.user, queryset)
