@@ -65,7 +65,7 @@ class EnderecoInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (EnderecoInline, PlantaoInline)
     fieldsets = (
-        ('Geral', {'fields': ('email', 'last_login', 'date_joined', 'is_active')}),
+        ('Geral', {'fields': ('email', 'last_login', 'date_joined', 'is_active', 'password')}),
         ('Perfil', {'fields': ('name', 'rg', 'cpf', 'cnh', 'axis', 'bond_type', 'phone', 'registration',  'course',
                                'university', 'department', 'date_fired', 'scholarship',  'scholarship_type')})
     )

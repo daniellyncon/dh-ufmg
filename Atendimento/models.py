@@ -271,7 +271,7 @@ class AtendimentoTranspasse(models.Model):
         verbose_name_plural = "Fichas Transpasse"
 
     def get_pessoas(self):
-        return self.assisted_person.full_name
+        return self.assisted_person.full_name or None
 
 
 class AtendimentoDRS(models.Model):
