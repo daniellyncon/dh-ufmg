@@ -297,6 +297,9 @@ class AtendimentoDRS(models.Model):
     def get_pessoas(self):
         return self.assisted_person.full_name
 
+    def __str__(self):
+        return f"Ficha N°{self.id}"
+
 
 class AcompanhamentoTranspasse(models.Model):
     comments = models.TextField(max_length=2000, default='', verbose_name="Observações",
