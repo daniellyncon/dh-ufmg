@@ -27,8 +27,12 @@ def relation_recurso_processo(user, queryset):
 
 
 def is_transpasse(user):
+    if user.is_anonymous:
+        return True
     return TRANSPASSE in user.axis.all()
 
 
 def is_drs(user):
+    if user.is_anonymous:
+        return True
     return DRS in user.axis.all()

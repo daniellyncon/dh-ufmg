@@ -309,7 +309,6 @@ class PessoaAdmin(admin.ModelAdmin):
         return True
 
     def has_view_permission(self, request, obj=None):
-        print(obj)
         if obj is None:
             return True
         return request.user.is_superuser or is_same_axis(request.user, obj)
@@ -333,7 +332,7 @@ class PessoaAdmin(admin.ModelAdmin):
 
 @admin.register(AtendimentoDRS)
 class DrsAdmin(admin.ModelAdmin):
-    list_display = ('assisted_person',)
+    list_display = ('assisted_person', 'id')
     fieldsets = (
         ("Atendimento DRS", {"fields": ('assisted_person', 'how_knew_about_drs', 'current_occupation',
                                         'had_other_occupations', 'relevant_information', 'reference_entities',
@@ -358,7 +357,7 @@ class DrsAdmin(admin.ModelAdmin):
     actions_selection_counter = True
 
     def has_module_permission(self, request):
-        return True
+        return request.user.is_superuser or is_drs(request.user)
 
     def has_add_permission(self, request):
         return request.user.is_superuser or is_drs(request.user)
@@ -381,7 +380,7 @@ class DrsAdmin(admin.ModelAdmin):
 
 @admin.register(AtendimentoTranspasse)
 class TranpasseAdmin(admin.ModelAdmin):
-    list_display = ('assisted_person',)
+    list_display = ('assisted_person', 'id')
     fieldsets = (
         ("Transpasse", {"fields": ('assisted_person', 'how_knew_about_transpasse', 'psychology_intern',
                                    'lives_with', 'cities_lived', 'ist_exams_up_to_date',
@@ -392,8 +391,8 @@ class TranpasseAdmin(admin.ModelAdmin):
                                    'documents_owned', 'rectified_name_and_gender', 'willing_to_rectify',
                                    'been_arrested', 'city_arrested', 'year_arrested', 'was_processed')}),
     )
-    autocomplete_fields = ('assisted_person',)
-    list_display_links = ('assisted_person',)
+    autocomplete_fields = ('assisted_person', )
+    list_display_links = ('assisted_person', )
     # list_filter = ("author", "genre")
     list_select_related = True
     list_per_page = 20
@@ -410,7 +409,7 @@ class TranpasseAdmin(admin.ModelAdmin):
     actions_selection_counter = True
 
     def has_module_permission(self, request):
-        return True
+        return request.user.is_superuser or is_transpasse(request.user)
 
     def has_add_permission(self, request):
         return request.user.is_superuser or is_transpasse(request.user)
