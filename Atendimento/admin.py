@@ -358,7 +358,7 @@ class DrsAdmin(admin.ModelAdmin):
     actions_selection_counter = True
 
     def has_module_permission(self, request):
-        return request.user.is_superuser or is_drs(request.user)
+        return True
 
     def has_add_permission(self, request):
         return request.user.is_superuser or is_drs(request.user)
@@ -416,7 +416,7 @@ class TranpasseAdmin(admin.ModelAdmin):
     actions_selection_counter = True
 
     def has_module_permission(self, request):
-        return request.user.is_superuser or is_transpasse(request.user)
+        return True
 
     def has_add_permission(self, request):
         return request.user.is_superuser or is_transpasse(request.user)
