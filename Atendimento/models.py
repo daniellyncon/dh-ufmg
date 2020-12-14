@@ -40,6 +40,33 @@ class Caso(models.Model):
         verbose_name_plural = "Casos"
 
 
+class ObservacoesCaso(models.Model):
+    caso = models.ForeignKey(Caso, on_delete=models.CASCADE, blank=True, null=True)
+    date = models.DateField(_("Data"))
+    description = models.TextField(_("Observação"), max_length=2000, default='')
+
+    class Meta:
+        verbose_name_plural = "Observações do caso"
+
+
+class ObservacoesPessoa(models.Model):
+    person = models.ForeignKey('Pessoa', on_delete=models.CASCADE, blank=True, null=True)
+    date = models.DateField(_("Data"))
+    description = models.TextField(_("Observação"), max_length=2000, default='')
+
+    class Meta:
+        verbose_name_plural = "Observações da pessoa"
+
+
+class ObservacoesProcesso(models.Model):
+    person = models.ForeignKey('Processo', on_delete=models.CASCADE, blank=True, null=True)
+    date = models.DateField(_("Data"))
+    description = models.TextField(_("Observação"), max_length=2000, default='')
+
+    class Meta:
+        verbose_name_plural = "Observações do processo"
+
+
 class Processo(models.Model):
     AREAS_CHOICES = (('1', 'Administrativo'), ('2', 'Ambiental'), ('3', 'Cível'), ('4', 'Consumidor'),
                      ('5', 'Criminal'), ('6', 'Família'), ('7', 'Previdenciário'),
@@ -82,6 +109,10 @@ class Processo(models.Model):
 
     def get_recursos(self):
         return ",".join([str(p) for p in self.judicial_appeals.all()])
+
+
+
+
 
 
 class Recurso(models.Model):

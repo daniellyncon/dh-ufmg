@@ -8,8 +8,23 @@ admin.site.unregister(Group)
 
 class TarefaDocumentoInline(admin.StackedInline):
     model = Documento.tasks.through
-    extra = 0
+    extra = 1
     verbose_name = "Documento relacionado"
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
 
 
 class TarefaInline(admin.StackedInline):
@@ -19,6 +34,44 @@ class TarefaInline(admin.StackedInline):
     fields = (
         "title",
     )
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+class ObservacoesDocumentoInline(admin.StackedInline):
+    model = ObservacoesDocumento
+    extra = 1
+    can_delete = True
+    show_change_link = True
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 
 class PlantaoInline(admin.StackedInline):
@@ -65,7 +118,7 @@ class EnderecoInline(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = (EnderecoInline, PlantaoInline)
     fieldsets = (
-        ('Geral', {'fields': ('email', 'last_login', 'date_joined', 'is_active', 'password')}),
+        ('Geral', {'fields': ('email', 'last_login', 'date_joined', 'is_active', 'password', 'is_superuser')}),
         ('Perfil', {'fields': ('name', 'rg', 'cpf', 'cnh', 'axis', 'bond_type', 'phone', 'registration',  'course',
                                'university', 'department', 'date_fired', 'scholarship',  'scholarship_type')})
     )
@@ -132,6 +185,8 @@ class TarefaAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("title", "deadline", "description", "responsible", "is_done")}),
     )
+
+    inlines = (TarefaDocumentoInline, )
 
     def get_responsibles(self, obj):
         return ", ".join([e.name for e in obj.responsible.all()])

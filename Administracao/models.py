@@ -17,6 +17,15 @@ class Eixo(models.Model):
         return f"{self.name}"
 
 
+class ObservacoesDocumento(models.Model):
+    person = models.ForeignKey('Administracao.Documento', on_delete=models.CASCADE, blank=True, null=True)
+    date = models.DateField(_("Data"))
+    description = models.TextField(_("Observação"), max_length=2000, default='')
+
+    class Meta:
+        verbose_name_plural = "Observações do documento"
+
+
 class Documento(models.Model):
     TYPES = (('1', 'Ofício'), ('2', 'Parecer'), ('3', 'Nota Técnica'), ('4', 'Amicus Curiae'),
              ('5', 'Documentos de Assistidos'), ('6', 'Petições'), ('7', 'Atas de Reuniões'), ('8', 'Administrativo'),

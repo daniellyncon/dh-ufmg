@@ -38,6 +38,21 @@ class AcompanhamentoTranspasseInline(admin.StackedInline):
     can_delete = True
     show_change_link = True
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 class AtendimentoTranspasseInline(admin.StackedInline):
     model = AtendimentoTranspasse
@@ -53,6 +68,21 @@ class AtendimentoTranspasseInline(admin.StackedInline):
     can_delete = True
     show_change_link = True
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 class AtendimentoDRSInline(admin.StackedInline):
     model = AtendimentoDRS
@@ -65,6 +95,21 @@ class AtendimentoDRSInline(admin.StackedInline):
     can_delete = True
     show_change_link = True
 
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
 
 class RecursoHistoricoInline(admin.StackedInline):
     model = HistoricoRecurso
@@ -74,6 +119,87 @@ class RecursoHistoricoInline(admin.StackedInline):
     extra = 1
     can_delete = True
     show_change_link = True
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+class ObservacoesCasoInline(admin.StackedInline):
+    model = ObservacoesCaso
+    extra = 1
+    can_delete = True
+    show_change_link = True
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+class ObservacoesPessoaInline(admin.StackedInline):
+    model = ObservacoesPessoa
+    extra = 1
+    can_delete = True
+    show_change_link = True
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
+
+
+class ObservacoesProcessoInline(admin.StackedInline):
+    model = ObservacoesProcesso
+    extra = 1
+    can_delete = True
+    show_change_link = True
+
+    def has_module_permission(self, request):
+        return True
+
+    def has_add_permission(self, request, obj):
+        return True
+
+    def has_view_permission(self, request, obj=None):
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        return True
 
 
 @admin.register(Caso)
@@ -85,19 +211,15 @@ class CasoAdmin(admin.ModelAdmin):
                                       'report',  'law_suits', 'entities', 'axis', 'tasks', 'documents')}),
     )
     list_display_links = ()
-    # list_filter = ("author", "genre")
     list_select_related = False
     list_per_page = 20
     list_max_show_all = 100
-    # list_editable = ("title",)
     search_fields = ("law_suit_number",)
-    # autocomplete_fields = ("genre",)
-    # date_hierarchy = "published_on"
     save_as = True
     save_as_continue = True
     save_on_top = True
     preserve_filters = True
-    inlines = ()
+    inlines = (ObservacoesCasoInline, )
     actions = []
     actions_on_top = True
     actions_on_bottom = True
@@ -145,9 +267,7 @@ class ProcessoAdmin(admin.ModelAdmin):
     list_select_related = True
     list_per_page = 20
     list_max_show_all = 100
-    # list_editable = ("title",)
     search_fields = ("law_suit_number",)
-    # autocomplete_fields = ("genre",)
     date_hierarchy = "start_date"
     save_as = True
     save_as_continue = True
@@ -158,10 +278,6 @@ class ProcessoAdmin(admin.ModelAdmin):
     actions_on_top = True
     actions_on_bottom = False
     actions_selection_counter = True
-
-    # formfield_overrides = {
-    #     models.DateField: {'widget': CustomDateInput},
-    # }
 
     Processo.get_law_area.short_description = 'Área do direito'
     Processo.get_recursos.short_description = 'Recursos relacionados'
@@ -270,16 +386,10 @@ class PessoaAdmin(admin.ModelAdmin):
                                 'reference_regional_administration', "street", "number", "complement", "neighborhood",
                                 "city", "state")}),
     )
-    # raw_id_fields = ("author",)
     readonly_fields = ("get_age",)
-    # list_display_links = ()
-    # list_filter = ("author", "genre")
-    # list_select_related = False
     list_per_page = 20
     list_max_show_all = 100
-    # list_editable = ("title",)
     search_fields = ("full_name",)
-    # autocomplete_fields = ("genre",)
     list_select_related = True
     save_as = True
     save_as_continue = True
@@ -340,11 +450,9 @@ class DrsAdmin(admin.ModelAdmin):
     )
     autocomplete_fields = ('assisted_person',)
     list_display_links = ('assisted_person',)
-    # list_filter = ("author", "genre")
     list_select_related = True
     list_per_page = 20
     list_max_show_all = 100
-    # list_editable = ("title",)
     search_fields = ("assisted_person",)
     save_as = True
     save_as_continue = True
@@ -393,7 +501,6 @@ class TranpasseAdmin(admin.ModelAdmin):
     )
     autocomplete_fields = ('assisted_person', )
     list_display_links = ('assisted_person', )
-    # list_filter = ("author", "genre")
     list_select_related = True
     list_per_page = 20
     list_max_show_all = 100
