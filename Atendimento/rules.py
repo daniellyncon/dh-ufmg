@@ -1,8 +1,11 @@
 from .models import Pessoa, Processo, Eixo
 
+try:
+    TRANSPASSE = Eixo.objects.filter(name__icontains='transpasse').get()
+    DRS = Eixo.objects.filter(name__icontains='drs').get()
 
-TRANSPASSE = Eixo.objects.filter(name__icontains='transpasse').get()
-DRS = Eixo.objects.filter(name__icontains='drs').get()
+except Exception:
+    print("Eixos ainda não cadastrados!!!")
 
 
 def is_same_axis(user, obj):

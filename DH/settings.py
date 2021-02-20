@@ -203,7 +203,7 @@ JAZZMIN_SETTINGS = {
     # Hide these apps when generating side menu e.g (auth)
     "hide_apps": [],
     # Hide these models when generating side menu (e.g auth.user)
-    "hide_models": [],
+    "hide_models": ["Atendimento.AtendimentoDRS", "Atendimento.AtendimentoTranspasse"],
     # List of apps to base side menu (app or model) ordering off of
     "order_with_respect_to": [
         "Administracao.Usuario",
@@ -242,9 +242,9 @@ JAZZMIN_SETTINGS = {
         "Atendimento.Caso": "fas fa-hands",
         "Atendimento.Pessoa": "fas fa-users",
         "Atendimento.Processo": "fas fa-gavel",
-        "Atendimento.Recurso": "fas fa-balance-scale-right",
-        "Atendimento.AtendimentoDRS": "fas fa-universal-access",
-        "Atendimento.AtendimentoTranspasse": "fas fa-fist-raised",
+        "Atendimento.Recurso": "fas fa-balance-scale-right"
+        # "Atendimento.AtendimentoDRS": "fas fa-universal-access",
+        # "Atendimento.AtendimentoTranspasse": "fas fa-fist-raised",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

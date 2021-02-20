@@ -208,8 +208,10 @@ class CasoAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Dados do caso", {"fields": ('related_areas', 'reference_contacts', 'daj_number', 'daj_advisor', 'daj_intern',
                                       'registration_date', 'solution_date', 'advisor', 'intern', 'assisted_person',
-                                      'report',  'law_suits', 'entities', 'axis', 'tasks', 'documents')}),
+                                      'is_active', 'is_amicus_curiae', 'report',  'law_suits', 'entities', 'axis',
+                                      'tasks', 'documents')}),
     )
+    list_filter = ('is_active', )
     list_display_links = ()
     list_select_related = False
     list_per_page = 20

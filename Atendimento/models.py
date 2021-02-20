@@ -12,6 +12,8 @@ class Caso(models.Model):
              ('9', 'Sucessões'), ('10', 'Societário'), ('11', 'Trabalhista'), ('12', 'Tributário'),
              ('13', 'Contratos'), ('14', 'Internacional'))
 
+    is_amicus_curiae = models.BooleanField(verbose_name=_("Amicus Curiae?"), default=False)
+    is_active = models.BooleanField(verbose_name=_("Caso Ativo?"), default=True)
     related_areas = models.CharField(_('Áreas relacionadas'), max_length=3, choices=AREAS, default=1)
     reference_contacts = models.CharField(_("Contatos de referência"), blank=True, null=True, default=None,
                                           max_length=200)
@@ -151,7 +153,7 @@ class HistoricoRecurso(models.Model):
 
 class Pessoa(models.Model):
     CIVIL_STATUS_CHOICES = (('1', 'Solteira'), ('2', 'Casada'), ('3', 'Separada'), ('4', 'Divorciada'),
-                            ('5', 'Viúva'))
+                            ('5', 'Viúva'), ('6', 'União estável'))
 
     GENDER_CHOICES = (('1', 'Agênero'), ('2', 'Cisgênero'), ('3', 'Gênero flúido'), ('4', 'Transgênero'),
                       ('5', 'Crossdresser'), ('6', 'Drag Queen'), ('7', 'Não-binário'))
@@ -250,6 +252,8 @@ class Pessoa(models.Model):
 
     def get_related_cases(self):
         return ",".join([str(c) for c in self.caso_set.all()])
+
+    get_related_cases.short_description = 'Casos Relacionados'
 
 
 class AtendimentoTranspasse(models.Model):
